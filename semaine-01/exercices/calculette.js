@@ -1,47 +1,54 @@
 const prompt = require("prompt-sync")();
 
-const operation = prompt(
-  "Qu'elle opération souhaitez-vous faire ? (+, -, *, /)"
-);
+let continuer = "oui";
 
-const chiffre1 = Number(prompt("Entrez le premier nombre : "));
-const chiffre2 = Number(prompt("Entrez le deuxième nombre : "));
+while (continuer === "oui") {
+  console.log("\n----------------------------\n");
 
-let resultat;
+  let operation = prompt("Quelle opération ? (+, -, *, /) ");
 
-if (operation === "+") {
-  resultat = chiffre1 + chiffre2;
-} else if (operation === "-") {
-  resultat = chiffre1 - chiffre2;
-} else if (operation === "*") {
-  resultat = chiffre1 * chiffre2;
-} else if (operation === "/") {
-  resultat = chiffre1 / chiffre2;
-} else {
-  console.log("Opération non reconnue !");
-}
+  while (
+    operation !== "+" &&
+    operation !== "-" &&
+    operation !== "*" &&
+    operation !== "/"
+  ) {
+    operation = prompt("❌ Opération invalide. Réessaye : (+, -, *, /) ");
+  }
 
-if (resultat !== undefined) {
+  const chiffre1 = Number(prompt("Entrez le premier nombre : "));
+  const chiffre2 = Number(prompt("Entrez le deuxième nombre : "));
+
+  let resultat;
+
+  if (operation === "+") {
+    resultat = chiffre1 + chiffre2;
+  } else if (operation === "-") {
+    resultat = chiffre1 - chiffre2;
+  } else if (operation === "*") {
+    resultat = chiffre1 * chiffre2;
+  } else if (operation === "/") {
+    if (chiffre2 === 0) {
+      resultat = "❌ Division par zéro !";
+    } else {
+      resultat = chiffre1 / chiffre2;
+    }
+  }
+
   console.log("Résultat : " + resultat);
+
+  continuer = prompt("Souhaitez-vous faire un autre calcul ? (oui/non) ")
+    .toLowerCase()
+    .trim();
+
+  console.log("DEBUG: continuer vaut =>", continuer); // <=== Debug
+
+  while (continuer !== "oui" && continuer !== "non") {
+    continuer = prompt(
+      "❌ Réponse invalide. Tape 'oui' ou 'non' : "
+    ).toLowerCase();
+    console.log("DEBUG (inside invalid loop): continuer vaut =>", continuer);
+  }
 }
 
-// function addition(a, b) {
-//   return a + b;
-// }
-
-// function soustraction(a, b) {
-//   return a - b;
-// }
-
-// function calculatrice(a, b, operation) {
-//   if (operation === "addition") {
-//     addition(a, b);
-//   } else if (operation === "soustraction") {
-//     soustraction(a, b);
-//   } else {
-//     return "Operation non reconnue !";
-//   }
-// }
-
-// calculatrice(10, 9, "addition");
-// calculatrice(10, 9, "soustraction");
+console.log("👋 Merci d'avoir utilisé la calculette !");
