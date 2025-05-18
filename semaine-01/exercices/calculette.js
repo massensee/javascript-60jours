@@ -5,7 +5,9 @@ let continuer = "oui";
 while (continuer === "oui") {
   console.log("\n----------------------------\n");
 
-  let operation = prompt("Quelle opération ? (+, -, *, /) ");
+  let operation = prompt(
+    "Quelle opération souhaitez-vous faire ? (+, -, *, /) "
+  );
 
   while (
     operation !== "+" &&
@@ -41,13 +43,10 @@ while (continuer === "oui") {
     .toLowerCase()
     .trim();
 
-  console.log("DEBUG: continuer vaut =>", continuer); // <=== Debug
-
   while (continuer !== "oui" && continuer !== "non") {
     continuer = prompt(
       "❌ Réponse invalide. Tape 'oui' ou 'non' : "
     ).toLowerCase();
-    console.log("DEBUG (inside invalid loop): continuer vaut =>", continuer);
   }
 }
 
