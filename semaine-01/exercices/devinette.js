@@ -1,51 +1,80 @@
 const prompt = require("prompt-sync")();
 
-let jouerEncore = true;
+// Fonction : choisir un mot aléatoire
+function choisirMotAleatoire(mots) {
+  const index = Math.floor(Math.random() * mots.length);
+  return mots[index].toLowerCase();
+}
 
-while (jouerEncore) {
+// Fonction : demander le niveau
+function demanderNiveau() {
+  let niveau = prompt(
+    "Choisis un niveau : facile difficile ou expert ? "
+  ).toLowerCase();
+  if (niveau === "facile") {
+    return { niveau, essais: 10 };
+  } else if (niveau === "difficile") {
+    return { niveau, essais: 6 };
+  } else if (niveau === "expert") {
+    return { niveau, essais: 4 };
+  } else {
+    console.log(
+      "⚠️ Niveau inconnu ! Le mode 'difficile' est activé par défaut."
+    );
+    return { niveau: "difficile", essais: 6 };
+  }
+}
+
+// Fonction : vérifier et insérer une lettre
+function verifierLettre(lettre, motDeviner, motCacher) {
+  let trouve = false;
+  for (let i = 0; i < motDeviner.length; i++) {
+    if (lettre === motDeviner[i]) {
+      motCacher[i] = lettre;
+      trouve = true;
+    }
+  }
+  return trouve;
+}
+
+// Fonction : jouer une partie
+function jouerPartie() {
   const mots = ["Malaise", "Voyage", "Parking", "Boussole"];
-
-  const motAleatoire = Math.floor(Math.random() * mots.length);
-  const motDeviner = mots[motAleatoire].toLowerCase();
-
+  const motDeviner = choisirMotAleatoire(mots);
   let motCacher = "_".repeat(motDeviner.length).split("");
+  let lettreProposees = [];
 
-  let essaiRestant = 6;
-  let lettreProposer = [];
+  const { niveau, essais } = demanderNiveau();
+  let essaiRestant = essais;
+
+  console.log(`🎮 Tu as choisi le niveau ${niveau}.`);
 
   while (motCacher.includes("_") && essaiRestant > 0) {
-    let chercher = prompt("Quelle lettre choisi(e)-tu ? : ").toLowerCase();
-    let trouver = false;
+    let lettre = prompt("Quelle lettre choisis-tu ? : ").toLowerCase();
 
-    if (!/^[a-z]$/.test(chercher)) {
+    if (!/^[a-z]$/.test(lettre)) {
       console.log("❌ Entrée invalide. Tu dois entrer UNE lettre (a-z).");
       continue;
     }
 
-    if (lettreProposer.includes(chercher)) {
-      console.log("🔁 Tu as déjà proposé cette lettre !");
+    if (lettreProposees.includes(lettre)) {
+      console.log("🔤 Lettres déjà proposées : " + lettreProposees.join(", "));
       essaiRestant--;
-      console.log(`Il te reste ${essaiRestant} essai !`);
+      console.log(`Il te reste ${essaiRestant} essai(s) !`);
       continue;
     }
 
-    lettreProposer.push(chercher);
+    lettreProposees.push(lettre);
 
-    console.log("Lettre cherchée :", chercher);
-    for (let i = 0; i < motDeviner.length; i++) {
-      if (chercher === motDeviner[i]) {
-        motCacher[i] = chercher;
-        trouver = true;
-      }
-    }
-
-    if (!trouver) {
+    if (verifierLettre(lettre, motDeviner, motCacher)) {
+      console.log("✅ Bonne lettre !");
+    } else {
       essaiRestant--;
       console.log("❌ Mauvaise lettre !");
-      console.log("Mot : " + motCacher.join(" "));
-      console.log(`🧪 Il te reste ${essaiRestant} essai !`);
     }
-    console.log(motCacher.join(" "));
+
+    console.log("Mot : " + motCacher.join(" "));
+    console.log(`🧪 Il te reste ${essaiRestant} essai(s) !`);
   }
 
   if (!motCacher.includes("_")) {
@@ -53,11 +82,20 @@ while (jouerEncore) {
   } else {
     console.log("💀 Perdu ! Le mot était : " + motDeviner);
   }
-
-  let reponse = prompt("Veux-tu rejouer ? (oui/non) : ").toLowerCase();
-
-  if (reponse !== "oui") {
-    jouerEncore = false;
-    console.log("Merci d'avoir jouer !");
-  }
 }
+
+// Fonction : demander si on veut rejouer
+function demanderSiRejouer() {
+  let reponse = prompt("Veux-tu rejouer ? (oui/non) : ").toLowerCase();
+  return reponse === "oui";
+}
+
+// Boucle principale
+let jouerEncore = true;
+
+while (jouerEncore) {
+  jouerPartie();
+  jouerEncore = demanderSiRejouer();
+}
+
+console.log("👋 Merci d'avoir joué !");
