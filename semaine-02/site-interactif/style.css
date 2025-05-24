@@ -1,12 +1,64 @@
-body {
-  font-family: Arial, sans-serif;
+* {
   margin: 0;
   padding: 0;
-  background-color: white;
-  color: black;
+  box-sizing: border-box;
 }
 
-header,
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  color: black;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  text-align: center;
+  color: #f1f1f1;
+  background-color: #222;
+  padding: 1.5rem;
+  position: relative;
+}
+
+nav {
+  display: none;
+}
+
+nav.visible {
+  display: block;
+}
+
+#menu-burger {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#menu-burger span {
+  display: block;
+  width: 30px;
+  height: 4px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+main {
+  flex: 1;
+  padding: 2em;
+}
+
+.cacher {
+  display: none;
+}
+
 footer {
   background-color: #222;
   color: white;
@@ -14,8 +66,9 @@ footer {
   padding: 1em;
 }
 
-main {
-  padding: 2em;
+button {
+  padding: 5px;
+  border-radius: 6px;
 }
 
 .lightBlue {

@@ -10,12 +10,32 @@
   <body>
     <header>
       <h1>Bienvenue sur mon site interactif</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Acceuil</a></li>
+          <li><a href="#">A propos</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <button id="menu-burger" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
     <main>
       <section>
         <p>Ceci est ma première page web avec HTML, CSS et JavaScript !</p>
         <button id="changer-couleur">Change la couleur</button>
+        <br /><br />
+        <h2>À propos</h2>
+        <button id="toggle-apropos">Voir plus</button>
+        <br /><br />
+        <p id="texte-apropos" class="cacher">
+          Je suis en train d’apprendre le développement web, et ce site est mon
+          premier projet interactif !
+        </p>
       </section>
     </main>
 
