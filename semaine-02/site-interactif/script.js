@@ -5,23 +5,45 @@ const btnToggle = document.getElementById("toggle-apropos");
 const textApropos = document.getElementById("texte-apropos");
 const form = document.querySelector("form");
 
-menuBurger.addEventListener("click", () => {
-  nav.classList.toggle("visible");
-});
+function toggleMenu() {
+  menuBurger.addEventListener("click", () => {
+    nav.classList.toggle("visible");
+  });
+}
 
-btn.addEventListener("click", function () {
-  document.body.classList.toggle("lightBlue");
-});
+toggleMenu();
 
-btnToggle.addEventListener("click", () => {
-  textApropos.classList.toggle("cacher");
+function changerTheme() {
+  btn.addEventListener("click", function () {
+    document.body.classList.toggle("lightBlue");
+  });
+}
 
-  const estCacher = textApropos.classList.contains("cacher");
+changerTheme();
 
-  btnToggle.textContent = estCacher ? "Voir plus" : "Voir moins";
-});
+function toggleTexteApropos() {
+  btnToggle.addEventListener("click", () => {
+    textApropos.classList.toggle("cacher");
 
-form.addEventListener("submit", function (e) {
+    const estCacher = textApropos.classList.contains("cacher");
+
+    btnToggle.textContent = estCacher ? "Voir plus" : "Voir moins";
+  });
+}
+
+toggleTexteApropos();
+
+function afficherMessage(confirmMessage, message, couleur) {
+  confirmMessage.textContent = message;
+  confirmMessage.style.color = couleur;
+  confirmMessage.classList.remove("invalid");
+}
+
+function emailValid(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validerFormulaire(e) {
   e.preventDefault();
 
   const prenom = document.getElementById("prenom").value.trim();
@@ -41,18 +63,19 @@ form.addEventListener("submit", function (e) {
     !password ||
     message.length < 10
   ) {
-    confirmMessage.textContent =
-      "Veuillez remplir tous les champs correctement (min. 10 caractères pour le message).";
-    confirmMessage.style.color = "red";
+    afficherMessage(
+      confirmMessage,
+      "Veuillez remplir tous les champs correctement (min. 10 caractères pour le message)."
+    );
     return;
   }
 
-  confirmMessage.textContent = `Merci ${prenom}, votre message a bien été envoyé.`;
-  confirmMessage.style.color = "green";
-
+  afficherMessage(
+    confirmMessage,
+    `Merci ${prenom}, votre message a bien été envoyé.`,
+    "green"
+  );
   form.reset();
-});
-
-function emailValid(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
+
+form.addEventListener("submit", validerFormulaire);
