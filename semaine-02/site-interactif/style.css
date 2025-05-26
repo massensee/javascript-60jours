@@ -62,8 +62,8 @@ form h2 {
 
 form {
   background-color: #f1f1f1;
-  width: 400px;
-  height: 500px;
+  max-width: 400px;
+  min-height: 500px;
   border: 1px solid #222;
   border-radius: 10px;
   display: flex;
@@ -111,6 +111,16 @@ form button:hover {
 }
 
 .cacher {
+  display: none;
+}
+
+#message-confirmation {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.invalid {
   display: none;
 }
 

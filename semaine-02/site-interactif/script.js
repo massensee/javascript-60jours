@@ -24,6 +24,35 @@ btnToggle.addEventListener("click", () => {
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const prenom = document.getElementById("prenom").value;
-  alert(`Merci ${prenom} ! Votre message a bien été envoyé.`);
+  const prenom = document.getElementById("prenom").value.trim();
+  const nom = document.getElementById("nom").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const message = document.getElementById("message").value.trim();
+  const confirmMessage = document.getElementById("message-confirmation");
+
+  // Toujours enlever la classe "invalid" pour afficher le message
+  confirmMessage.classList.remove("invalid");
+
+  if (
+    !prenom ||
+    !nom ||
+    !emailValid(email) ||
+    !password ||
+    message.length < 10
+  ) {
+    confirmMessage.textContent =
+      "Veuillez remplir tous les champs correctement (min. 10 caractères pour le message).";
+    confirmMessage.style.color = "red";
+    return;
+  }
+
+  confirmMessage.textContent = `Merci ${prenom}, votre message a bien été envoyé.`;
+  confirmMessage.style.color = "green";
+
+  form.reset();
 });
+
+function emailValid(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
