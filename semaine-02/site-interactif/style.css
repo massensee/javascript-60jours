@@ -140,6 +140,20 @@ form button:hover {
   }
 }
 
+.fade-out {
+  animation: fadeOut 0.4s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
 footer {
   background-color: #222;
   color: white;

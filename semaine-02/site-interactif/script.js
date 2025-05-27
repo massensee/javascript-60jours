@@ -36,18 +36,26 @@ toggleTexteApropos();
 function afficherMessage(confirmMessage, message, couleur) {
   confirmMessage.textContent = message;
   confirmMessage.style.color = couleur;
-  confirmMessage.classList.remove("invalid");
-  confirmMessage.classList.remove("fade-in");
+  confirmMessage.classList.remove("invalid", "fade-in", "fade-out");
+
   void confirmMessage.offsetWidth;
+
+  confirmMessage.textContent = message;
   confirmMessage.classList.add("fade-in");
 
-  confirmMessage.addEventListener(
-    "animationend",
-    () => {
-      confirmMessage.classList.remove("fade-in");
-    },
-    { once: true }
-  );
+  setTimeout(() => {
+    confirmMessage.classList.remove("fade-in");
+    confirmMessage.classList.add("fade-out");
+
+    confirmMessage.addEventListener(
+      "animationend",
+      () => {
+        confirmMessage.textContent = "";
+        confirmMessage.classList.remove("fade-out");
+      },
+      { once: true }
+    );
+  }, 5000);
 }
 
 function emailValid(email) {
