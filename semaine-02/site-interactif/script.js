@@ -37,6 +37,17 @@ function afficherMessage(confirmMessage, message, couleur) {
   confirmMessage.textContent = message;
   confirmMessage.style.color = couleur;
   confirmMessage.classList.remove("invalid");
+  confirmMessage.classList.remove("fade-in");
+  void confirmMessage.offsetWidth;
+  confirmMessage.classList.add("fade-in");
+
+  confirmMessage.addEventListener(
+    "animationend",
+    () => {
+      confirmMessage.classList.remove("fade-in");
+    },
+    { once: true }
+  );
 }
 
 function emailValid(email) {
@@ -52,9 +63,16 @@ function validerFormulaire(e) {
   const password = document.getElementById("password").value.trim();
   const message = document.getElementById("message").value.trim();
   const confirmMessage = document.getElementById("message-confirmation");
+  const button = document.querySelector("button[type='submit']");
+
+  button.disabled = true;
 
   // Toujours enlever la classe "invalid" pour afficher le message
   confirmMessage.classList.remove("invalid");
+
+  setTimeout(() => {
+    button.disabled = false;
+  }, 2000);
 
   if (
     !prenom ||
@@ -65,7 +83,8 @@ function validerFormulaire(e) {
   ) {
     afficherMessage(
       confirmMessage,
-      "Veuillez remplir tous les champs correctement (min. 10 caractères pour le message)."
+      "Veuillez remplir tous les champs correctement (min. 10 caractères pour le message).",
+      "red"
     );
     return;
   }
@@ -75,6 +94,7 @@ function validerFormulaire(e) {
     `Merci ${prenom}, votre message a bien été envoyé.`,
     "green"
   );
+
   form.reset();
 }
 
