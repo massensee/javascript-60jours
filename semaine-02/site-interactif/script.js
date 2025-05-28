@@ -4,6 +4,16 @@ const nav = document.querySelector("nav");
 const btnToggle = document.getElementById("toggle-apropos");
 const textApropos = document.getElementById("texte-apropos");
 const form = document.querySelector("form");
+const btnToggleFormulaire = document.getElementById("toggle-formulaire");
+const formulaireSection = document.querySelector(".formulaire");
+
+btnToggleFormulaire.addEventListener("click", () => {
+  formulaireSection.classList.toggle("cache-form");
+  const estCacher = formulaireSection.classList.contains("cache-form");
+  btnToggleFormulaire.textContent = estCacher
+    ? "Afficher le formulaire"
+    : "Masquer le formulaire";
+});
 
 function toggleMenu() {
   menuBurger.addEventListener("click", () => {
@@ -16,6 +26,7 @@ toggleMenu();
 function changerTheme() {
   btn.addEventListener("click", function () {
     document.body.classList.toggle("lightBlue");
+    document.body.style.color = "black";
   });
 }
 

@@ -26,8 +26,12 @@
 
     <main>
       <section>
-        <p>Ceci est ma première page web avec HTML, CSS et JavaScript !</p>
-        <button id="changer-couleur">Changer le thème</button>
+        <div class="changer-theme">
+          <p>Ceci est ma première page web avec HTML, CSS et JavaScript !</p>
+          <button id="changer-couleur" class="btn-theme">
+            Changer le thème
+          </button>
+        </div>
         <br /><br />
         <h2>À propos</h2>
         <button id="toggle-apropos">Voir plus</button>
@@ -37,7 +41,10 @@
           premier projet interactif !
         </p>
       </section>
-      <section class="formulaire">
+      <button id="toggle-formulaire" class="btn-theme">
+        Afficher le formulaire
+      </button>
+      <section class="formulaire cache-form">
         <form action="#">
           <h2>S'inscrire</h2>
           <label for="nom">Nom</label>
