@@ -39,9 +39,10 @@ h2 {
   outline: none;
   border: 1px solid #ccc;
   font-size: 15px;
+  margin-bottom: 20px;
 }
 
-.todo-app button {
+.btn-ajouter {
   width: 25%;
   padding: 10px 13px;
   border-radius: 6px;
@@ -52,6 +53,38 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
-.todo-app button:hover {
+.btn-ajouter:hover {
   background-color: #0056b3;
+}
+
+.todo-app li {
+  margin-top: 20px;
+  list-style-type: none;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin: 5px auto;
+  position: relative;
+}
+
+.btn-supprimer {
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  position: absolute;
+  right: 8px;
+  top: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-supprimer:hover {
+  background-color: #ccc;
+}
+
+.done {
+  text-decoration: line-through;
+  color: grey;
 }
