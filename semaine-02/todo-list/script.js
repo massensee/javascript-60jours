@@ -22,6 +22,12 @@ function filtrerTache(filtre) {
 filterTask.forEach((btn) => {
   btn.addEventListener("click", () => {
     const filtre = btn.dataset.filtre;
+
+    filterTask.forEach((btn) => {
+      btn.classList.remove("active-filter");
+    });
+    btn.classList.add("active-filter");
+
     filtrerTache(filtre);
   });
 });

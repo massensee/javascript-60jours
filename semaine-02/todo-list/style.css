@@ -84,6 +84,44 @@ h2 {
   background-color: #ccc;
 }
 
+.filtres {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.filtres button {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-weight: normal;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Au survol (hover) */
+.filtres button:hover {
+  background-color: #d0d0d0;
+}
+
+.filtres button.active-filter {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.filtres button.active-filter:hover {
+  background-color: #2a8640;
+}
+
 .done {
   text-decoration: line-through;
   color: grey;
