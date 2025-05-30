@@ -61,6 +61,8 @@ function addTask(taskObj) {
   const liEl = document.createElement("li");
   liEl.textContent = taskObj.texte;
 
+  liEl.classList.add("fade-in");
+
   if (taskObj.faite) {
     liEl.classList.add("done");
   }
@@ -77,10 +79,16 @@ function addTask(taskObj) {
 
   deleteTask.addEventListener("click", (e) => {
     e.stopPropagation();
-    liEl.remove();
-    taches = taches.filter((t) => t !== taskObj);
-    addLocalStorage();
+
+    liEl.classList.add("fade-out");
+
+    setTimeout(() => {
+      liEl.remove();
+      taches = taches.filter((t) => t !== taskObj);
+      addLocalStorage();
+    }, 300);
   });
+
   liEl.appendChild(deleteTask);
   result.appendChild(liEl);
 
