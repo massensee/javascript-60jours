@@ -96,7 +96,11 @@ function addTask(taskObj) {
     liEl.classList.add("done");
   }
 
-  liEl.addEventListener("click", () => {
+  const btnValider = document.createElement("button");
+  btnValider.classList.add("btn-valider");
+  btnValider.textContent = "✅";
+
+  btnValider.addEventListener("click", () => {
     liEl.classList.toggle("done");
     taskObj.faite = !taskObj.faite;
     addLocalStorage();
@@ -118,6 +122,7 @@ function addTask(taskObj) {
     }, 400);
   });
 
+  liEl.appendChild(btnValider);
   liEl.appendChild(deleteTask);
   result.appendChild(liEl);
 
