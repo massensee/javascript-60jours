@@ -6,17 +6,34 @@ const filterTask = document.querySelectorAll("button[data-filtre]");
 let taches = [];
 
 function filtrerTache(filtre) {
-  document.querySelectorAll("#liste-taches li").forEach((li) => {
+  const liTaches = document.querySelectorAll("#liste-taches li");
+  let compteurVisible = 0;
+
+  liTaches.forEach((li) => {
     const estFaite = li.classList.contains("done");
 
     if (filtre === "toutes") {
       li.style.display = "list-item";
+      compteurVisible++;
     } else if (filtre === "faites") {
-      li.style.display = estFaite ? "list-item" : "none";
+      if (estFaite) {
+        li.style.display = "list-item";
+        compteurVisible++;
+      } else {
+        li.style.display = "none";
+      }
     } else if (filtre === "a-faire") {
-      li.style.display = !estFaite ? "list-item" : "none";
+      if (!estFaite) {
+        li.style.display = "list-item";
+        compteurVisible++;
+      } else {
+        li.style.display = "none";
+      }
     }
   });
+
+  const messageVide = document.getElementById("message-vide");
+  messageVide.style.display = compteurVisible === 0 ? "block" : "none";
 }
 
 filterTask.forEach((btn) => {
