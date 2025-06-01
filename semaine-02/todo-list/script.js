@@ -23,6 +23,8 @@ filterTask.forEach((btn) => {
   btn.addEventListener("click", () => {
     const filtre = btn.dataset.filtre;
 
+    localStorage.setItem("filtreActif", filtre);
+
     filterTask.forEach((btn) => {
       btn.classList.remove("active-filter");
     });
@@ -41,6 +43,16 @@ if (savedTasks) {
 
   taches = savedTasks;
 }
+
+const filtreSauvegarde = localStorage.getItem("filtreActif") || "toutes";
+filtrerTache(filtreSauvegarde);
+
+filterTask.forEach((btn) => {
+  btn.classList.remove("active-filter");
+  if (btn.dataset.filtre === filtreSauvegarde) {
+    btn.classList.add("active-filter");
+  }
+});
 
 btnAddTask.addEventListener("click", () => {
   if (task.value === "") {
@@ -86,7 +98,7 @@ function addTask(taskObj) {
       liEl.remove();
       taches = taches.filter((t) => t !== taskObj);
       addLocalStorage();
-    }, 300);
+    }, 400);
   });
 
   liEl.appendChild(deleteTask);
