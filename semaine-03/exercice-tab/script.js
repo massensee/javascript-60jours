@@ -10,29 +10,35 @@ const utilisateurs = [
 
 const head = document.createElement("thead");
 const ligne = document.createElement("tr");
-const colonne = document.createElement("th");
 
-const users = document.createElement("tbody");
+const titres = ["Nom", "Email", "Rôle", "Actif"];
 
-ligne.appendChild(colonne);
+titres.forEach((titre) => {
+  const colonne = document.createElement("th");
+  colonne.textContent = titre;
+  ligne.appendChild(colonne);
+});
+
 head.appendChild(ligne);
 listes.appendChild(head);
+
+const users = document.createElement("tbody");
 listes.appendChild(users);
 
 utilisateurs.forEach((utilisateur) => {
   const ligne = document.createElement("tr");
 
   const tdNom = document.createElement("td");
-  tdNom.textContent = `Nom: ${utilisateur.nom}`;
+  tdNom.textContent = `${utilisateur.nom}`;
 
   const tdEmail = document.createElement("td");
-  tdEmail.textContent = `Email: ${utilisateur.email}`;
+  tdEmail.textContent = `${utilisateur.email}`;
 
   const tdRole = document.createElement("td");
-  tdRole.textContent = `Role: ${utilisateur.role}`;
+  tdRole.textContent = `${utilisateur.role}`;
 
   const tdActif = document.createElement("td");
-  tdActif.textContent = `Actif: ${utilisateur.actif ? "✅" : "❌"}`;
+  tdActif.textContent = `${utilisateur.actif ? "✅" : "❌"}`;
 
   ligne.appendChild(tdNom);
   ligne.appendChild(tdEmail);

@@ -4,6 +4,23 @@
   box-sizing: border-box;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  padding: 20px;
+}
+
+table {
+  width: 450px;
+  min-height: 200px;
+}
+
 table,
 th,
 td {
