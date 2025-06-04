@@ -1,4 +1,57 @@
 const listes = document.getElementById("listeUtilisateurs");
+const form = document.getElementById("formAjout");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const nom = document.getElementById("nom").value;
+  const email = document.getElementById("email").value;
+  const statut = document.getElementById("statut").value;
+  const actif = document.getElementById("actif").checked;
+  const messageErreur = document.querySelector(".message-erreur");
+
+  if (nom === "" || email === "") {
+    messageErreur.textContent =
+      "Veuillez remplir tous les champs obligatoires.";
+    return;
+  }
+  messageErreur.textContent = "";
+
+  const nouvelleUtilisateur = {
+    nom,
+    email,
+    statut,
+    actif,
+  };
+
+  ajouterUtilisateurs(nouvelleUtilisateur);
+  form.reset();
+});
+
+function ajouterUtilisateurs(utilisateur) {
+  const ligne = document.createElement("tr");
+
+  const tdNom = document.createElement("td");
+  tdNom.textContent = `${utilisateur.nom}`;
+
+  const tdEmail = document.createElement("td");
+  tdEmail.textContent = `${utilisateur.email}`;
+
+  const tdStatut = document.createElement("td");
+  tdStatut.textContent = `${
+    utilisateur.statut === "admin" ? "Administrateur" : "Utilisateur"
+  }`;
+
+  const tdActif = document.createElement("td");
+  tdActif.textContent = `${utilisateur.actif ? "✅" : "❌"}`;
+
+  ligne.appendChild(tdNom);
+  ligne.appendChild(tdEmail);
+  ligne.appendChild(tdStatut);
+  ligne.appendChild(tdActif);
+
+  document.querySelector("tbody").appendChild(ligne);
+}
 
 const utilisateurs = [
   { nom: "Alice", email: "alice@mail.com", statut: "admin", actif: true },
@@ -25,27 +78,4 @@ listes.appendChild(head);
 const users = document.createElement("tbody");
 listes.appendChild(users);
 
-utilisateurs.forEach((utilisateur) => {
-  const ligne = document.createElement("tr");
-
-  const tdNom = document.createElement("td");
-  tdNom.textContent = `${utilisateur.nom}`;
-
-  const tdEmail = document.createElement("td");
-  tdEmail.textContent = `${utilisateur.email}`;
-
-  const tdStatut = document.createElement("td");
-  tdStatut.textContent = `${
-    utilisateur.statut === "admin" ? "Administrateur" : "Utilisateur"
-  }`;
-
-  const tdActif = document.createElement("td");
-  tdActif.textContent = `${utilisateur.actif ? "✅" : "❌"}`;
-
-  ligne.appendChild(tdNom);
-  ligne.appendChild(tdEmail);
-  ligne.appendChild(tdStatut);
-  ligne.appendChild(tdActif);
-
-  users.appendChild(ligne);
-});
+utilisateurs.forEach(ajouterUtilisateurs);

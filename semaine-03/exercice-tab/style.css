@@ -16,15 +16,16 @@ h1 {
   margin-bottom: 20px;
 }
 
-h2 {
+form h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f1f1f1;
 }
 
 form {
   padding: 20px;
   background-color: #007bff;
-  max-width: 320px;
+  max-width: 420px;
   margin: auto;
   gap: 15px;
   display: flex;
@@ -62,6 +63,12 @@ form button:hover {
   background-color: #0053ac;
   color: white;
   border: 1px solid transparent;
+}
+
+.message-erreur {
+  color: rgba(255, 0, 0, 0.76);
+  font-size: 15px;
+  font-weight: bold;
 }
 
 table {

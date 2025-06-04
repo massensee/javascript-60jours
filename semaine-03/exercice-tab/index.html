@@ -9,10 +9,10 @@
   <body>
     <h1>Dashboard des Utilisateurs</h1>
 
-    <h2>Ajouter un utilisateur</h2>
     <form id="formAjout">
-      <input type="text" id="nom" placeholder="Nom" required />
-      <input type="email" id="email" placeholder="Email" required />
+      <h2>Ajouter un utilisateur</h2>
+      <input type="text" id="nom" placeholder="Nom" />
+      <input type="email" id="email" placeholder="Email" />
       <select id="statut">
         <option value="user">Utilisateur</option>
         <option value="admin">Administrateur</option>
@@ -22,6 +22,7 @@
         Actif
       </label>
       <button type="submit">Ajouter</button>
+      <div class="message-erreur"></div>
     </form>
 
     <table id="listeUtilisateurs"></table>
