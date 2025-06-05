@@ -1,6 +1,10 @@
 const listes = document.getElementById("listeUtilisateurs");
 const form = document.getElementById("formAjout");
 
+listes.appendChild(creerEnteteTableau());
+const users = document.createElement("tbody");
+listes.appendChild(users);
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -61,21 +65,21 @@ const utilisateurs = [
   { nom: "Tanina", email: "tanina@mail.com", statut: "user", actif: false },
 ];
 
-const head = document.createElement("thead");
-const ligne = document.createElement("tr");
+function creerEnteteTableau() {
+  const head = document.createElement("thead");
 
-const titres = ["Nom", "Email", "Statut", "Actif"];
+  const ligne = document.createElement("tr");
 
-titres.forEach((titre) => {
-  const colonne = document.createElement("th");
-  colonne.textContent = titre;
-  ligne.appendChild(colonne);
-});
+  const titres = ["Nom", "Email", "Statut", "Actif"];
 
-head.appendChild(ligne);
-listes.appendChild(head);
+  titres.forEach((titre) => {
+    const colonne = document.createElement("th");
+    colonne.textContent = titre;
+    ligne.appendChild(colonne);
+  });
 
-const users = document.createElement("tbody");
-listes.appendChild(users);
+  head.appendChild(ligne);
+  return head;
+}
 
 utilisateurs.forEach(ajouterUtilisateurs);
