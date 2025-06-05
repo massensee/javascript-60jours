@@ -32,27 +32,23 @@ form.addEventListener("submit", (e) => {
   form.reset();
 });
 
+function creeCellule(texte) {
+  const cellule = document.createElement("td");
+  cellule.textContent = texte;
+  return cellule;
+}
+
 function ajouterUtilisateurs(utilisateur) {
   const ligne = document.createElement("tr");
 
-  const tdNom = document.createElement("td");
-  tdNom.textContent = `${utilisateur.nom}`;
-
-  const tdEmail = document.createElement("td");
-  tdEmail.textContent = `${utilisateur.email}`;
-
-  const tdStatut = document.createElement("td");
-  tdStatut.textContent = `${
-    utilisateur.statut === "admin" ? "Administrateur" : "Utilisateur"
-  }`;
-
-  const tdActif = document.createElement("td");
-  tdActif.textContent = `${utilisateur.actif ? "✅" : "❌"}`;
-
-  ligne.appendChild(tdNom);
-  ligne.appendChild(tdEmail);
-  ligne.appendChild(tdStatut);
-  ligne.appendChild(tdActif);
+  ligne.appendChild(creeCellule(utilisateur.nom));
+  ligne.appendChild(creeCellule(utilisateur.email));
+  ligne.appendChild(
+    creeCellule(
+      utilisateur.statut === "admin" ? "Administrateur" : "Utilisateur"
+    )
+  );
+  ligne.appendChild(creeCellule(utilisateur.actif ? "✅" : "❌"));
 
   document.querySelector("tbody").appendChild(ligne);
 }
@@ -82,4 +78,8 @@ function creerEnteteTableau() {
   return head;
 }
 
-utilisateurs.forEach(ajouterUtilisateurs);
+function afficherUtilisateurs(liste) {
+  liste.forEach(ajouterUtilisateurs);
+}
+
+afficherUtilisateurs(utilisateurs);
