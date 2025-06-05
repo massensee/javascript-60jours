@@ -32,7 +32,7 @@ form.addEventListener("submit", (e) => {
   form.reset();
 });
 
-function creeCellule(texte) {
+function creerCellule(texte) {
   const cellule = document.createElement("td");
   cellule.textContent = texte;
   return cellule;
@@ -41,14 +41,31 @@ function creeCellule(texte) {
 function ajouterUtilisateurs(utilisateur) {
   const ligne = document.createElement("tr");
 
-  ligne.appendChild(creeCellule(utilisateur.nom));
-  ligne.appendChild(creeCellule(utilisateur.email));
+  ligne.appendChild(creerCellule(utilisateur.nom));
+  ligne.appendChild(creerCellule(utilisateur.email));
   ligne.appendChild(
-    creeCellule(
+    creerCellule(
       utilisateur.statut === "admin" ? "Administrateur" : "Utilisateur"
     )
   );
-  ligne.appendChild(creeCellule(utilisateur.actif ? "✅" : "❌"));
+  ligne.appendChild(creerCellule(utilisateur.actif ? "✅" : "❌"));
+
+  const tdAction = document.createElement("td");
+  const boutonSuppriner = document.createElement("button");
+  boutonSuppriner.textContent = "Supprimer";
+  boutonSuppriner.style.backgroundColor = "#dc3545";
+  boutonSuppriner.style.border = "none";
+  boutonSuppriner.style.color = "white";
+  boutonSuppriner.style.padding = "5px 10px";
+  boutonSuppriner.style.borderRadius = "5px";
+  boutonSuppriner.style.cursor = "pointer";
+
+  boutonSuppriner.addEventListener("click", () => {
+    ligne.remove();
+  });
+
+  tdAction.appendChild(boutonSuppriner);
+  ligne.appendChild(tdAction);
 
   document.querySelector("tbody").appendChild(ligne);
 }
@@ -66,7 +83,7 @@ function creerEnteteTableau() {
 
   const ligne = document.createElement("tr");
 
-  const titres = ["Nom", "Email", "Statut", "Actif"];
+  const titres = ["Nom", "Email", "Statut", "Actif", "Actions"];
 
   titres.forEach((titre) => {
     const colonne = document.createElement("th");
