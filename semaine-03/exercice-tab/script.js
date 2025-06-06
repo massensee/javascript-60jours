@@ -51,20 +51,32 @@ function ajouterUtilisateurs(utilisateur) {
   ligne.appendChild(creerCellule(utilisateur.actif ? "✅" : "❌"));
 
   const tdAction = document.createElement("td");
-  const boutonSuppriner = document.createElement("button");
-  boutonSuppriner.textContent = "Supprimer";
-  boutonSuppriner.style.backgroundColor = "#dc3545";
-  boutonSuppriner.style.border = "none";
-  boutonSuppriner.style.color = "white";
-  boutonSuppriner.style.padding = "5px 10px";
-  boutonSuppriner.style.borderRadius = "5px";
-  boutonSuppriner.style.cursor = "pointer";
 
-  boutonSuppriner.addEventListener("click", () => {
+  const actionContainer = document.createElement("div");
+  actionContainer.classList.add("action-buttons");
+
+  const boutonSupprimer = document.createElement("button");
+  boutonSupprimer.classList.add("bouton-supprimer");
+  boutonSupprimer.innerHTML = `
+  <ion-icon name="trash-outline"></ion-icon>
+  <span class="texte-bouton">Supprimer</span>
+`;
+
+  const boutonModifier = document.createElement("button");
+  boutonModifier.classList.add("modifier-bouton");
+  boutonModifier.innerHTML = `
+  <ion-icon name="create-outline"></ion-icon>
+  <span class="texte-bouton">Modifier</span>
+`;
+
+  boutonSupprimer.addEventListener("click", () => {
     ligne.remove();
   });
 
-  tdAction.appendChild(boutonSuppriner);
+  actionContainer.appendChild(boutonModifier);
+  actionContainer.appendChild(boutonSupprimer);
+
+  tdAction.appendChild(actionContainer);
   ligne.appendChild(tdAction);
 
   document.querySelector("tbody").appendChild(ligne);

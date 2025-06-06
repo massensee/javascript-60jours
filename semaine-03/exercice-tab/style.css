@@ -101,3 +101,69 @@ tr :hover {
 td:last-child {
   text-align: center;
 }
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.action-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 1 auto;
+}
+
+.texte-bouton {
+  display: inline;
+}
+
+.bouton-supprimer {
+  width: auto;
+  padding: 6px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.bouton-supprimer:hover {
+  background-color: #a71d2a;
+  color: white;
+}
+
+.modifier-bouton {
+  width: auto;
+  padding: 6px 12px;
+  background-color: #dcb535;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.modifier-bouton:hover {
+  background-color: #a58621;
+  color: white;
+}
+
+.icone-action {
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+@media (max-width: 960px) {
+  .texte-bouton {
+    display: none;
+  }
+
+  .icone-action {
+    font-size: 22px;
+  }
+}
