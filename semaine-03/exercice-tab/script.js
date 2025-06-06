@@ -52,31 +52,7 @@ function ajouterUtilisateurs(utilisateur) {
 
   const tdAction = document.createElement("td");
 
-  const actionContainer = document.createElement("div");
-  actionContainer.classList.add("action-buttons");
-
-  const boutonSupprimer = document.createElement("button");
-  boutonSupprimer.classList.add("bouton-supprimer");
-  boutonSupprimer.innerHTML = `
-  <ion-icon name="trash-outline"></ion-icon>
-  <span class="texte-bouton">Supprimer</span>
-`;
-
-  const boutonModifier = document.createElement("button");
-  boutonModifier.classList.add("modifier-bouton");
-  boutonModifier.innerHTML = `
-  <ion-icon name="create-outline"></ion-icon>
-  <span class="texte-bouton">Modifier</span>
-`;
-
-  boutonSupprimer.addEventListener("click", () => {
-    ligne.remove();
-  });
-
-  actionContainer.appendChild(boutonModifier);
-  actionContainer.appendChild(boutonSupprimer);
-
-  tdAction.appendChild(actionContainer);
+  ajouterBoutonsAction(ligne, tdAction);
   ligne.appendChild(tdAction);
 
   document.querySelector("tbody").appendChild(ligne);
@@ -112,3 +88,87 @@ function afficherUtilisateurs(liste) {
 }
 
 afficherUtilisateurs(utilisateurs);
+
+function ajouterBoutonsAction(ligne, tdAction) {
+  tdAction.innerHTML = "";
+
+  const boutonModifier = document.createElement("button");
+  boutonModifier.classList.add("modifier-bouton");
+  boutonModifier.innerHTML = `<ion-icon name="pencil-outline"></ion-icon><span class="texte-bouton">Modifier</span>`;
+
+  const boutonSupprimer = document.createElement("button");
+  boutonSupprimer.classList.add("bouton-supprimer");
+  boutonSupprimer.innerHTML = `<ion-icon name="trash-outline"></ion-icon><span class="texte-bouton">Supprimer</span>`;
+
+  const container = document.createElement("div");
+  container.classList.add("action-buttons");
+
+  container.appendChild(boutonModifier);
+  container.appendChild(boutonSupprimer);
+  tdAction.appendChild(container);
+
+  boutonModifier.addEventListener("click", () => {
+    activerModeEdition(ligne, tdAction);
+  });
+
+  boutonSupprimer.addEventListener("click", () => {
+    ligne.remove();
+  });
+}
+
+function activerModeEdition(ligne, tdAction) {
+  const cellules = ligne.querySelectorAll("td");
+  const ancienNom = cellules[0].textContent;
+  const ancienEmail = cellules[1].textContent;
+  const ancienStatut = cellules[2].textContent;
+  const ancienActif = cellules[3].textContent === "✅";
+
+  const inputNom = document.createElement("input");
+  inputNom.value = ancienNom;
+  cellules[0].innerHTML = "";
+  cellules[0].appendChild(inputNom);
+
+  const inputEmail = document.createElement("input");
+  inputEmail.value = ancienEmail;
+  cellules[1].innerHTML = "";
+  cellules[1].appendChild(inputEmail);
+
+  const selectStatut = document.createElement("select");
+  ["admin", "user"].forEach((role) => {
+    const option = document.createElement("option");
+    option.value = role;
+    option.textContent = role === "admin" ? "Administrateur" : "Utilisateur";
+    if (ancienStatut.toLowerCase().includes(role)) {
+      option.selected = true;
+    }
+    selectStatut.appendChild(option);
+  });
+  cellules[2].innerHTML = "";
+  cellules[2].appendChild(selectStatut);
+
+  const checkActif = document.createElement("input");
+  checkActif.type = "checkbox";
+  checkActif.checked = ancienActif;
+  cellules[3].innerHTML = "";
+  cellules[3].appendChild(checkActif);
+
+  tdAction.innerHTML = "";
+  const boutonValider = document.createElement("button");
+  boutonValider.textContent = "Valider";
+  tdAction.appendChild(boutonValider);
+
+  boutonValider.addEventListener("click", () => {
+    const nouveauNom = inputNom.value;
+    const nouvelEmail = inputEmail.value;
+    const nouveauStatut = selectStatut.value;
+    const nouvelActif = checkActif.checked;
+
+    cellules[0].textContent = nouveauNom;
+    cellules[1].textContent = nouvelEmail;
+    cellules[2].textContent =
+      nouveauStatut === "admin" ? "Administrateur" : "Utilisateur";
+    cellules[3].textContent = nouvelActif ? "✅" : "❌";
+
+    ajouterBoutonsAction(ligne, tdAction);
+  });
+}
