@@ -10,20 +10,26 @@
     <h1>Liste des utilisateurs</h1>
 
     <!-- Formulaire de filtres -->
-    <form id="form-filtre">
-      <input
-        type="text"
-        id="recherche"
-        placeholder="Rechercher un nom ou un email"
-      />
-      <label>
-        <input type="checkbox" id="filtre-actif" /> Afficher seulement les
-        actifs
-      </label>
-      <select id="tri">
-        <option value="az">Trier A → Z</option>
-        <option value="za">Trier Z → A</option>
-      </select>
+    <form id="form-filtre" class="form-filtre">
+      <div class="champ-formulaire">
+        <label for="recherche">Recherche :</label>
+        <input type="text" id="recherche" placeholder="Nom ou email" />
+      </div>
+
+      <div class="champ-formulaire">
+        <label>
+          <input type="checkbox" id="filtre-actif" />
+          Afficher seulement les actifs
+        </label>
+      </div>
+
+      <div class="champ-formulaire">
+        <label for="tri">Trier par :</label>
+        <select id="tri">
+          <option value="az">Nom A → Z</option>
+          <option value="za">Nom Z → A</option>
+        </select>
+      </div>
     </form>
 
     <!-- Tableau des utilisateurs -->
