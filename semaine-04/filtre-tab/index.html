@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Filtrer Tableau</title>
+  </head>
+  <body>
+    <h1>Liste des utilisateurs</h1>
+
+    <!-- Formulaire de filtres -->
+    <form id="form-filtre">
+      <input
+        type="text"
+        id="recherche"
+        placeholder="Rechercher un nom ou un email"
+      />
+      <label>
+        <input type="checkbox" id="filtre-actif" /> Afficher seulement les
+        actifs
+      </label>
+      <select id="tri">
+        <option value="az">Trier A → Z</option>
+        <option value="za">Trier Z → A</option>
+      </select>
+    </form>
+
+    <!-- Tableau des utilisateurs -->
+    <table id="tableau-utilisateurs">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Statut</th>
+          <th>Actif</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
