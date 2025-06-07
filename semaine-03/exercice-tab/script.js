@@ -171,4 +171,23 @@ function activerModeEdition(ligne, tdAction) {
 
     ajouterBoutonsAction(ligne, tdAction);
   });
+
+  const boutonAnnuler = document.createElement("button");
+  boutonAnnuler.textContent = "Annuler";
+  tdAction.appendChild(boutonAnnuler);
+
+  boutonAnnuler.addEventListener("click", () => {
+    const confirmation = confirm(
+      "Voulez-vous vraiment annuler les modifications ?"
+    );
+
+    if (!confirmation) return;
+
+    cellules[0].textContent = ancienNom;
+    cellules[1].textContent = ancienEmail;
+    cellules[2].textContent = ancienStatut;
+    cellules[3].textContent = ancienActif ? "✅" : "❌";
+
+    ajouterBoutonsAction(ligne, tdAction);
+  });
 }
