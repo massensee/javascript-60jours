@@ -11,52 +11,98 @@ const inputRecherche = document.getElementById("recherche");
 const filtreActif = document.getElementById("filtre-actif");
 const selectTri = document.getElementById("tri");
 const btnReinitialiser = document.getElementById("btn-reinitialiser");
+const btnPrecedent = document.getElementById("precedent");
+const btnSuivant = document.getElementById("suivant");
+
+let pageActuelle = 1;
+const utilisateursParPage = 3;
+
+let filtreTerme = "";
+let filtreActifSeulement = false;
+let filtreTri = "az";
+let utilisateursFiltres = [];
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  pageActuelle = 1;
+
+  filtreTerme = inputRecherche.value;
+  filtreActifSeulement = filtreActif.checked;
+  filtreTri = selectTri.value;
+
+  filtrerEtTrier();
+});
 
 btnReinitialiser.addEventListener("click", () => {
   inputRecherche.value = "";
   filtreActif.checked = false;
-  selectTri.value = "";
+  selectTri.value = "az";
 
-  afficherUtilisateurs(utilisateurs);
+  pageActuelle = 1;
+  filtreTerme = "";
+  filtreActifSeulement = false;
+  filtreTri = "az";
+
+  filtrerEtTrier();
 });
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const terme = inputRecherche.value;
-  const actifSeulement = filtreActif.checked;
-  const tri = selectTri.value;
-
-  filtrerEtTrier(terme, actifSeulement, tri);
+btnPrecedent.addEventListener("click", () => {
+  if (pageActuelle > 1) {
+    pageActuelle--;
+    filtrerEtTrier();
+  }
 });
 
-function filtrerEtTrier(terme, actifSeulement, tri) {
-  let resultat = utilisateurs.filter((utilisateur) => {
-    const nomOk = utilisateur.nom.toLowerCase().includes(terme.toLowerCase());
+btnSuivant.addEventListener("click", () => {
+  const totalPages = Math.ceil(
+    utilisateursFiltres.length / utilisateursParPage
+  );
+  if (pageActuelle < totalPages) {
+    pageActuelle++;
+    filtrerEtTrier();
+  }
+});
+
+function filtrerEtTrier() {
+  utilisateursFiltres = utilisateurs.filter((utilisateur) => {
+    const nomOk = utilisateur.nom
+      .toLowerCase()
+      .includes(filtreTerme.toLowerCase());
     const emailOk = utilisateur.email
       .toLowerCase()
-      .includes(terme.toLowerCase());
+      .includes(filtreTerme.toLowerCase());
     return nomOk || emailOk;
   });
 
-  if (actifSeulement) {
-    resultat = resultat.filter((utilisateur) => utilisateur.actif === true);
+  if (filtreActifSeulement) {
+    utilisateursFiltres = utilisateursFiltres.filter(
+      (utilisateur) => utilisateur.actif
+    );
   }
 
-  resultat.sort((a, b) => {
-    if (tri === "az") {
-      return a.nom.localeCompare(b.nom);
-    } else {
-      return b.nom.localeCompare(a.nom);
-    }
+  utilisateursFiltres.sort((a, b) => {
+    return filtreTri === "az"
+      ? a.nom.localeCompare(b.nom)
+      : b.nom.localeCompare(a.nom);
   });
 
-  afficherUtilisateurs(resultat);
+  const debut = (pageActuelle - 1) * utilisateursParPage;
+  const fin = debut + utilisateursParPage;
+  const utilisateursPage = utilisateursFiltres.slice(debut, fin);
+
+  afficherUtilisateurs(utilisateursPage);
+
+  // Désactiver les boutons si nécessaire
+  const totalPages = Math.ceil(
+    utilisateursFiltres.length / utilisateursParPage
+  );
+  btnPrecedent.disabled = pageActuelle === 1;
+  btnSuivant.disabled = pageActuelle === totalPages || totalPages === 0;
 }
 
 function afficherUtilisateurs(utilisateurs) {
-  const users = document.querySelector("tbody");
-  users.innerHTML = "";
+  const tbody = document.querySelector("tbody");
+  tbody.innerHTML = "";
 
   utilisateurs.forEach((utilisateur) => {
     const ligne = document.createElement("tr");
@@ -78,8 +124,9 @@ function afficherUtilisateurs(utilisateurs) {
     ligne.appendChild(cellEmail);
     ligne.appendChild(cellStatut);
     ligne.appendChild(cellActif);
-    users.appendChild(ligne);
+    tbody.appendChild(ligne);
   });
 }
 
-afficherUtilisateurs(utilisateurs);
+// Afficher tous les utilisateurs au départ
+filtrerEtTrier();

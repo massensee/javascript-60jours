@@ -65,6 +65,7 @@ table {
   width: 100%;
   max-width: 1000px;
   margin: auto;
+  margin-top: 20px;
   border-collapse: collapse;
   background-color: white;
   border-radius: 12px;
@@ -114,6 +115,16 @@ button {
 
 button:hover {
   background-color: #134ac2;
+}
+
+.btn-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .bouton-supprimer {
