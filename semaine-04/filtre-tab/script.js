@@ -10,6 +10,15 @@ const form = document.getElementById("form-filtre");
 const inputRecherche = document.getElementById("recherche");
 const filtreActif = document.getElementById("filtre-actif");
 const selectTri = document.getElementById("tri");
+const btnReinitialiser = document.getElementById("btn-reinitialiser");
+
+btnReinitialiser.addEventListener("click", () => {
+  inputRecherche.value = "";
+  filtreActif.checked = false;
+  selectTri.value = "";
+
+  afficherUtilisateurs(utilisateurs);
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -60,7 +69,7 @@ function afficherUtilisateurs(utilisateurs) {
 
     const cellStatut = document.createElement("td");
     cellStatut.textContent =
-      utilisateur.statut === "admin" ? "Administrateur" : "Utilisayeur";
+      utilisateur.statut === "admin" ? "Administrateur" : "Utilisateur";
 
     const cellActif = document.createElement("td");
     cellActif.textContent = utilisateur.actif ? "✅" : "❌";
