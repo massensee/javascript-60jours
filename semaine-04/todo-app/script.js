@@ -4,10 +4,36 @@ const list = document.getElementById("list");
 
 ajouter.addEventListener("click", () => {
   const newTask = input.value.trim();
-
   if (newTask === "") {
-    list.textContent = "Veuillez saisir une tache !";
+    alert("Veuillez ajouter une tache !");
   } else {
-    list.textContent = newTask;
+    creerTask(input);
   }
+
+  input.value = "";
 });
+
+function creerTask(input) {
+  const newTask = input.value.trim();
+
+  const liEl = document.createElement("li");
+  liEl.textContent = newTask;
+
+  list.appendChild(liEl);
+  supprimeTask(liEl);
+
+  return newTask;
+}
+
+function supprimeTask(liEl) {
+  const btnSupprimer = document.createElement("button");
+  btnSupprimer.textContent = "🗑️";
+
+  liEl.appendChild(btnSupprimer);
+
+  btnSupprimer.addEventListener("click", () => {
+    liEl.remove();
+  });
+
+  return btnSupprimer;
+}
