@@ -2,38 +2,66 @@ const input = document.getElementById("new-task");
 const ajouter = document.getElementById("ajouter");
 const list = document.getElementById("list");
 
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 ajouter.addEventListener("click", () => {
-  const newTask = input.value.trim();
-  if (newTask === "") {
+  const texte = input.value.trim();
+  if (texte === "") {
     alert("Veuillez ajouter une tache !");
-  } else {
-    creerTask(input);
+    return;
   }
+
+  const nouvelleTache = {
+    id: Date.now(),
+    texte,
+    completed: false,
+  };
+
+  tasks.push(nouvelleTache);
+  saveTasks();
+  afficherTasks();
 
   input.value = "";
 });
 
-function creerTask(input) {
-  const newTask = input.value.trim();
+function afficherTasks() {
+  list.innerHTML = "";
 
-  const liEl = document.createElement("li");
-  liEl.textContent = newTask;
+  tasks.forEach((task) => {
+    const liEl = document.createElement("li");
+    liEl.innerText = "";
+    liEl.append(task.texte);
+    liEl.dataset.id = task.id;
 
-  list.appendChild(liEl);
-  supprimeTask(liEl);
+    if (task.completed) {
+      liEl.classList.add("completed");
+    }
 
-  return newTask;
-}
+    const btnSupprimer = document.createElement("button");
+    btnSupprimer.textContent = "🗑️";
+    liEl.appendChild(btnSupprimer);
 
-function supprimeTask(liEl) {
-  const btnSupprimer = document.createElement("button");
-  btnSupprimer.textContent = "🗑️";
+    btnSupprimer.addEventListener("click", () => {
+      const id = Number(liEl.dataset.id);
+      tasks = tasks.filter((t) => t.id !== id);
+      saveTasks();
+      afficherTasks();
+    });
 
-  liEl.appendChild(btnSupprimer);
+    liEl.addEventListener("click", (e) => {
+      if (e.target !== btnSupprimer) {
+        task.completed = !task.completed;
+        saveTasks();
+        afficherTasks();
+      }
+    });
 
-  btnSupprimer.addEventListener("click", () => {
-    liEl.remove();
+    list.appendChild(liEl);
   });
-
-  return btnSupprimer;
 }
+
+afficherTasks();
