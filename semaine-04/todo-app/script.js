@@ -6,6 +6,15 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let filtreActuel = "tous";
 
 const boutonsFiltres = document.querySelectorAll("[data-filtre]");
+const toutEffacer = document.getElementById("tout-effacer");
+
+toutEffacer.addEventListener("click", () => {
+  if (confirm("Voulez-vous vraiment supprimer toutes les tâches ?")) {
+    tasks = [];
+    localStorage.removeItem("tasks");
+    afficherTasks();
+  }
+});
 
 boutonsFiltres.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -51,8 +60,6 @@ function afficherTasks() {
   } else if (filtreActuel === "termines") {
     tachesFiltrees = tasks.filter((t) => t.completed);
   }
-
-  console.log("Tâches à afficher :", tachesFiltrees);
 
   if (tachesFiltrees.length === 0) {
     const li = document.createElement("li");
