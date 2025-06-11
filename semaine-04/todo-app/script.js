@@ -3,6 +3,17 @@ const ajouter = document.getElementById("ajouter");
 const list = document.getElementById("list");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let filtreActuel = "tous";
+
+const boutonsFiltres = document.querySelectorAll("[data-filtre]");
+
+boutonsFiltres.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const filtre = btn.dataset.filtre;
+    filtreActuel = filtre;
+    afficherTasks();
+  });
+});
 
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -31,10 +42,28 @@ ajouter.addEventListener("click", () => {
 function afficherTasks() {
   list.innerHTML = "";
 
-  tasks.forEach((task) => {
+  let tachesFiltrees = [];
+
+  if (filtreActuel === "tous") {
+    tachesFiltrees = tasks;
+  } else if (filtreActuel === "actifs") {
+    tachesFiltrees = tasks.filter((t) => !t.completed);
+  } else if (filtreActuel === "termines") {
+    tachesFiltrees = tasks.filter((t) => t.completed);
+  }
+
+  console.log("Tâches à afficher :", tachesFiltrees);
+
+  if (tachesFiltrees.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "Aucune tâche à afficher.";
+    list.appendChild(li);
+    return;
+  }
+
+  tachesFiltrees.forEach((task) => {
     const liEl = document.createElement("li");
-    liEl.innerText = "";
-    liEl.append(task.texte);
+    liEl.innerText = task.texte;
     liEl.dataset.id = task.id;
 
     if (task.completed) {
@@ -45,7 +74,8 @@ function afficherTasks() {
     btnSupprimer.textContent = "🗑️";
     liEl.appendChild(btnSupprimer);
 
-    btnSupprimer.addEventListener("click", () => {
+    btnSupprimer.addEventListener("click", (e) => {
+      e.stopPropagation();
       const id = Number(liEl.dataset.id);
       tasks = tasks.filter((t) => t.id !== id);
       saveTasks();
