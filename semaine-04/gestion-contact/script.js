@@ -1,21 +1,36 @@
-const nom = document.getElementById("name");
+const form = document.querySelector(".contact-form");
+const name = document.getElementById("name");
 const email = document.getElementById("email");
 const phone = document.getElementById("phone");
-const form = document.querySelector(".formulaire");
 const result = document.getElementById("list");
 
-let contact = [];
+const inputSearch = document.getElementById("search");
+
+let list = JSON.parse(localStorage.getItem("contacts")) || [];
+
+list.forEach((contact) => {
+  afficherContact(contact);
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
+  ajouterContact(formData);
+});
 
+function afficherContact(contact) {
+  const li = document.createElement("li");
+  li.textContent = `${contact.nom} - ${contact.email} - ${contact.telephone}`;
+  result.appendChild(li);
+}
+
+function ajouterContact(formData) {
   const nameValue = formData.get("name");
   const emailValue = formData.get("email");
   const phoneValue = formData.get("phone");
 
-  if (nameValue || emailValue || phoneValue === "") {
-    alert("Veuillez remplir tout les champs !");
+  if (!nameValue || !emailValue || !phoneValue) {
+    alert("Veuillez remplir les champs.");
     return;
   }
 
@@ -25,11 +40,11 @@ form.addEventListener("submit", (e) => {
     telephone: phoneValue,
   };
 
-  contact.push(nouveauContact);
+  list.push(nouveauContact);
 
-  const liEl = document.createElement("li");
-  liEl.textContent = `${nouveauContact.nom} - ${nouveauContact.email} - ${nouveauContact.telephone}`;
-  result.appendChild(liEl);
+  localStorage.setItem("contacts", JSON.stringify(list));
 
-  console.log("Nouveau contact: ", nouveauContact);
-});
+  afficherContact(nouveauContact);
+
+  form.reset();
+}

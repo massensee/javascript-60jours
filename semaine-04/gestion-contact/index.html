@@ -7,8 +7,8 @@
     <title>Gestion de contact</title>
   </head>
   <body>
-    <section>
-      <form action="#" class="formulaire">
+    <section class="container">
+      <form class="contact-form">
         <label for="name">Nom</label>
         <input
           type="text"
@@ -32,8 +32,11 @@
           id="phone"
           placeholder="06 XX XX XX XX"
         />
-        <button type="submit">Valider</button>
+        <button type="submit">Ajouter</button>
       </form>
+
+      <input type="text" id="search" placeholder="Rechercher un contact" />
+
       <ul id="list"></ul>
     </section>
 
