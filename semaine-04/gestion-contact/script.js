@@ -41,10 +41,23 @@ function ajouterContact(formData) {
   };
 
   list.push(nouveauContact);
-
   localStorage.setItem("contacts", JSON.stringify(list));
 
   afficherContact(nouveauContact);
 
   form.reset();
 }
+
+inputSearch.addEventListener("input", (e) => {
+  const searchText = e.target.value.toLowerCase();
+  const filtered = list.filter((contact) => {
+    return (
+      contact.nom.toLowerCase().includes(searchText) ||
+      contact.email.toLowerCase().includes(searchText)
+    );
+  });
+
+  result.innerHTML = "";
+
+  filtered.forEach(afficherContact);
+});
