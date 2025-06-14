@@ -26,6 +26,7 @@ form.addEventListener("submit", (e) => {
   }
 
   const nouvelleValeur = {
+    id: Date.now(),
     description: descriptionVal.value,
     montant: Number(montantVal.value),
     type: typeVal.value,
@@ -36,6 +37,8 @@ form.addEventListener("submit", (e) => {
   localStorage.setItem("transactions", JSON.stringify(transactions));
 
   afficherTransaction(nouvelleValeur);
+  mettreAJourSolde();
+  form.reset();
   console.log(nouvelleValeur);
 });
 
@@ -44,13 +47,23 @@ function afficherTransaction(transaction) {
   const signe = transaction.type === "revenu" ? "+" : "-";
 
   liEl.textContent = `${transaction.description} : ${signe}${transaction.montant} €`;
-  if (transaction.type === "revenu") {
-    liEl.classList.add("revenu");
-  } else {
-    liEl.classList.add("depense");
-  }
+  liEl.classList.add(transaction.type === "revenu" ? "revenu" : "depense");
 
+  const btn = document.createElement("button");
+  btn.textContent = "X";
+  btn.classList.add("supprimer-btn");
+  btn.addEventListener("click", () => supprimerTransaction(transaction.id));
+
+  liEl.appendChild(btn);
   result.appendChild(liEl);
+}
+
+function supprimerTransaction(id) {
+  transactions = transactions.filter((t) => t.id !== id);
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+  result.innerHTML = "";
+  transactions.forEach(afficherTransaction);
+  mettreAJourSolde();
 }
 
 function mettreAJourSolde() {
