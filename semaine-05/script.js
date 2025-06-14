@@ -3,6 +3,16 @@ const result = document.getElementById("liste-transactions");
 
 let transactions = [];
 
+const savedTransactions =
+  JSON.parse(localStorage.getItem("transactions")) || [];
+
+savedTransactions.forEach((transaction) => {
+  transactions.push(transaction);
+  afficherTransaction(transaction);
+});
+
+mettreAJourSolde();
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -22,6 +32,9 @@ form.addEventListener("submit", (e) => {
   };
 
   transactions.push(nouvelleValeur);
+
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+
   afficherTransaction(nouvelleValeur);
   console.log(nouvelleValeur);
 });
@@ -39,3 +52,15 @@ function afficherTransaction(transaction) {
 
   result.appendChild(liEl);
 }
+
+function mettreAJourSolde() {
+  const total = transactions.reduce((acc, transaction) => {
+    return transaction.type === "revenu"
+      ? acc + transaction.montant
+      : acc - transaction.montant;
+  }, 0);
+
+  document.getElementById("solde").textContent = `${total} €`;
+}
+
+mettreAJourSolde();
