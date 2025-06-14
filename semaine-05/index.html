@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Carnet de dépenses</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Carnet de dépenses</h1>
+
+      <!-- Affichage du solde -->
+      <section class="solde">
+        <h2>Solde actuel : <span id="solde">0 €</span></h2>
+      </section>
+
+      <!-- Formulaire d'ajout -->
+      <form id="formulaire-transaction">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          id="description"
+          placeholder="Ex: Loyer, Salaire..."
+        />
+
+        <label for="montant">Montant (€)</label>
+        <input type="number" id="montant" placeholder="Ex: -50 ou 100" />
+
+        <label for="type">Type</label>
+        <select id="type">
+          <option value="revenu">Revenu</option>
+          <option value="depense">Dépense</option>
+        </select>
+
+        <button type="submit">Ajouter</button>
+      </form>
+
+      <!-- Liste des transactions -->
+      <section>
+        <h2>Transactions</h2>
+        <ul id="liste-transactions"></ul>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
