@@ -48,7 +48,7 @@ button {
   border-radius: 30px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease-in-out;
 }
 
 button:hover {
@@ -60,6 +60,7 @@ input[type="text"] {
   padding: 0.6rem;
   border: 1px solid #ddd;
   border-radius: 8px;
+  outline: none;
   margin-top: 1rem;
   font-size: 1rem;
 }
