@@ -1,5 +1,6 @@
 const form = document.getElementById("formulaire-transaction");
 const result = document.getElementById("liste-transactions");
+const reset = document.getElementById("reset");
 
 let transactions = [];
 
@@ -67,13 +68,29 @@ function supprimerTransaction(id) {
 }
 
 function mettreAJourSolde() {
-  const total = transactions.reduce((acc, transaction) => {
-    return transaction.type === "revenu"
-      ? acc + transaction.montant
-      : acc - transaction.montant;
-  }, 0);
+  let revenus = 0;
+  let depenses = 0;
 
-  document.getElementById("solde").textContent = `${total} €`;
+  transactions.forEach((transaction) => {
+    if (transaction.type === "revenu") {
+      revenus += transaction.montant;
+    } else {
+      depenses += transaction.montant;
+    }
+  });
+
+  const solde = revenus - depenses;
+
+  document.getElementById("total-revenus").textContent = `+ ${revenus} €`;
+  document.getElementById("total-depenses").textContent = `- ${depenses} €`;
+  document.getElementById("solde").textContent = `${solde} €`;
 }
 
 mettreAJourSolde();
+
+reset.addEventListener("click", () => {
+  transactions = [];
+  localStorage.removeItem("transactions");
+  result.innerHTML = "";
+  mettreAJourSolde();
+});

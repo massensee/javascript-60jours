@@ -79,3 +79,29 @@ li.depense {
   cursor: pointer;
   font-size: 1.2em;
 }
+
+.resume {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+.resume p {
+  margin: 0;
+  font-weight: bold;
+}
+
+#total-revenus {
+  color: green;
+}
+
+#total-depenses {
+  color: red;
+}
+
+#solde {
+  color: blue;
+}
