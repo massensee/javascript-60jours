@@ -49,6 +49,11 @@ button:hover {
   background-color: #0056b3;
 }
 
+button[type="button"] {
+  background-color: rgb(204, 4, 4);
+  color: #f1f1f1;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -57,10 +62,13 @@ ul {
 
 li {
   background-color: #f1f1f1;
-  padding: 0.75rem;
+  padding: 0.2rem;
   margin-bottom: 0.5rem;
   border-left: 5px solid #ccc;
   border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 li.revenu {

@@ -4,6 +4,13 @@ const reset = document.getElementById("reset");
 
 let transactions = [];
 
+reset.addEventListener("click", () => {
+  transactions = [];
+  localStorage.removeItem("transactions");
+  result.innerHTML = "";
+  mettreAJourSolde();
+});
+
 const savedTransactions =
   JSON.parse(localStorage.getItem("transactions")) || [];
 
@@ -31,6 +38,7 @@ form.addEventListener("submit", (e) => {
     description: descriptionVal.value,
     montant: Number(montantVal.value),
     type: typeVal.value,
+    date: new Date().toLocaleDateString("fr-FR"),
   };
 
   transactions.push(nouvelleValeur);
@@ -47,7 +55,7 @@ function afficherTransaction(transaction) {
   const liEl = document.createElement("li");
   const signe = transaction.type === "revenu" ? "+" : "-";
 
-  liEl.textContent = `${transaction.description} : ${signe}${transaction.montant} €`;
+  liEl.textContent = `${transaction.description} : ${signe}${transaction.montant} € - ${transaction.date}`;
   liEl.classList.add(transaction.type === "revenu" ? "revenu" : "depense");
 
   const btn = document.createElement("button");
@@ -87,10 +95,3 @@ function mettreAJourSolde() {
 }
 
 mettreAJourSolde();
-
-reset.addEventListener("click", () => {
-  transactions = [];
-  localStorage.removeItem("transactions");
-  result.innerHTML = "";
-  mettreAJourSolde();
-});
