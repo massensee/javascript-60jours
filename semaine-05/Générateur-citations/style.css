@@ -68,3 +68,8 @@ input[type="text"] {
 form {
   margin-top: 1.5rem;
 }
+
+#liste-citations li {
+  list-style-type: none;
+  padding: 10px 0;
+}

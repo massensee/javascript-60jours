@@ -21,11 +21,21 @@ const ajouterAuteur = document.getElementById("new-auteur");
 const form = document.getElementById("quote-form");
 const result = document.getElementById("quote");
 const effacer = document.getElementById("clear");
+const listeCitations = document.getElementById("liste-citations");
 
 newCitations.addEventListener("click", () => {
   const index = Math.floor(Math.random() * citations.length);
   result.textContent = `« ${citations[index].texte} » - Auteur: ${citations[index].auteur}`;
 });
+
+function afficherCitations(citations) {
+  listeCitations.innerHTML = "";
+  citations.forEach((citation) => {
+    const liEl = document.createElement("li");
+    liEl.textContent = `${citation.texte} - ${citation.auteur}`;
+    listeCitations.appendChild(liEl);
+  });
+}
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -46,6 +56,7 @@ form.addEventListener("submit", (e) => {
 
   result.textContent = `« ${nouvellesCitations.texte} » - Auteur: ${nouvellesCitations.auteur}`;
 
+  afficherCitations(citations);
   form.reset();
 });
 
