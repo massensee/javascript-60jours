@@ -20,6 +20,7 @@ const ajouterCitations = document.getElementById("new-quote-input");
 const ajouterAuteur = document.getElementById("new-auteur");
 const form = document.getElementById("quote-form");
 const result = document.getElementById("quote");
+const effacer = document.getElementById("clear");
 
 newCitations.addEventListener("click", () => {
   const index = Math.floor(Math.random() * citations.length);
@@ -41,9 +42,18 @@ form.addEventListener("submit", (e) => {
 
   citations.push(nouvellesCitations);
 
-  localStorage.setItem("citations", JSON.stringify(citations));
+  memoryCitations();
 
   result.textContent = `« ${nouvellesCitations.texte} » - Auteur: ${nouvellesCitations.auteur}`;
 
   form.reset();
+});
+
+function memoryCitations() {
+  localStorage.setItem("citations", JSON.stringify(citations));
+}
+
+effacer.addEventListener("click", () => {
+  localStorage.removeItem("citations");
+  location.reload();
 });
