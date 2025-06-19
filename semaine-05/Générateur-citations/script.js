@@ -1,4 +1,4 @@
-const citations = [
+let citations = JSON.parse(localStorage.getItem("citations")) || [
   {
     auteur: "Albert Einstein",
     texte:
@@ -16,9 +16,34 @@ const citations = [
 ];
 
 const newCitations = document.getElementById("new-quote");
+const ajouterCitations = document.getElementById("new-quote-input");
+const ajouterAuteur = document.getElementById("new-auteur");
+const form = document.getElementById("quote-form");
 const result = document.getElementById("quote");
 
 newCitations.addEventListener("click", () => {
   const index = Math.floor(Math.random() * citations.length);
   result.textContent = `« ${citations[index].texte} » - Auteur: ${citations[index].auteur}`;
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (ajouterAuteur.value === "" && ajouterCitations.value === "") {
+    alert("Veuillez remplir les champs.");
+    return;
+  }
+
+  const nouvellesCitations = {
+    auteur: ajouterAuteur.value,
+    texte: ajouterCitations.value,
+  };
+
+  citations.push(nouvellesCitations);
+
+  localStorage.setItem("citations", JSON.stringify(citations));
+
+  result.textContent = `« ${nouvellesCitations.texte} » - Auteur: ${nouvellesCitations.auteur}`;
+
+  form.reset();
 });
