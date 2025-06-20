@@ -1,4 +1,4 @@
-let citations = JSON.parse(localStorage.getItem("citations")) || [
+const citationsParDefaut = [
   {
     auteur: "Albert Einstein",
     texte:
@@ -15,6 +15,13 @@ let citations = JSON.parse(localStorage.getItem("citations")) || [
   },
 ];
 
+let citations = JSON.parse(localStorage.getItem("citations"));
+
+if (!citations || citations.length === 0) {
+  citations = [...citationsParDefaut];
+  memoryCitations();
+}
+
 const newCitations = document.getElementById("new-quote");
 const ajouterCitations = document.getElementById("new-quote-input");
 const ajouterAuteur = document.getElementById("new-auteur");
@@ -24,6 +31,14 @@ const effacer = document.getElementById("clear");
 const listeCitations = document.getElementById("liste-citations");
 const count = document.getElementById("compteur");
 const trier = document.getElementById("trier");
+const restaurer = document.getElementById("restaurer");
+
+restaurer.addEventListener("click", () => {
+  citations = [...citationsParDefaut];
+  memoryCitations();
+  afficherCitations(citations);
+  result.textContent = "Citations restaurer !";
+});
 
 newCitations.addEventListener("click", () => {
   const index = Math.floor(Math.random() * citations.length);
@@ -34,8 +49,6 @@ function afficherCitations(citations) {
   listeCitations.innerHTML = "";
   citations.forEach((citation, index) => {
     const liEl = creerCitationElement(citation, index);
-    listeCitations.appendChild(liEl);
-
     listeCitations.appendChild(liEl);
   });
   count.textContent = "Nombre de citations: " + citations.length;
