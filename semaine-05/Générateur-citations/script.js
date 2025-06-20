@@ -33,25 +33,30 @@ newCitations.addEventListener("click", () => {
 function afficherCitations(citations) {
   listeCitations.innerHTML = "";
   citations.forEach((citation, index) => {
-    const liEl = document.createElement("li");
-    liEl.textContent = `${citation.texte} - Auteur: ${citation.auteur}`;
+    const liEl = creerCitationElement(citation, index);
     listeCitations.appendChild(liEl);
 
-    const btnSupprimer = document.createElement("button");
-    btnSupprimer.textContent = "X";
-    btnSupprimer.dataset.index = index;
-
-    btnSupprimer.addEventListener("click", () => {
-      citations.splice(index, 1);
-      memoryCitations();
-      afficherCitations(citations);
-    });
-
-    count.textContent = "Nombre de citations: " + citations.length;
-
-    liEl.appendChild(btnSupprimer);
     listeCitations.appendChild(liEl);
   });
+  count.textContent = "Nombre de citations: " + citations.length;
+}
+
+function creerCitationElement(citation, index) {
+  const liEl = document.createElement("li");
+  liEl.textContent = `${citation.texte} - Auteur: ${citation.auteur}`;
+
+  const btnSupprimer = document.createElement("button");
+  btnSupprimer.textContent = "X";
+  btnSupprimer.dataset.index = index;
+
+  btnSupprimer.addEventListener("click", () => {
+    citations.splice(index, 1);
+    memoryCitations();
+    afficherCitations(citations);
+  });
+
+  liEl.appendChild(btnSupprimer);
+  return liEl;
 }
 
 trier.addEventListener("click", () => {
