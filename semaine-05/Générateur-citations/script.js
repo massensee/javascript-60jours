@@ -22,6 +22,8 @@ const form = document.getElementById("quote-form");
 const result = document.getElementById("quote");
 const effacer = document.getElementById("clear");
 const listeCitations = document.getElementById("liste-citations");
+const count = document.getElementById("compteur");
+const trier = document.getElementById("trier");
 
 newCitations.addEventListener("click", () => {
   const index = Math.floor(Math.random() * citations.length);
@@ -30,12 +32,33 @@ newCitations.addEventListener("click", () => {
 
 function afficherCitations(citations) {
   listeCitations.innerHTML = "";
-  citations.forEach((citation) => {
+  citations.forEach((citation, index) => {
     const liEl = document.createElement("li");
-    liEl.textContent = `${citation.texte} - ${citation.auteur}`;
+    liEl.textContent = `${citation.texte} - Auteur: ${citation.auteur}`;
+    listeCitations.appendChild(liEl);
+
+    const btnSupprimer = document.createElement("button");
+    btnSupprimer.textContent = "X";
+    btnSupprimer.dataset.index = index;
+
+    btnSupprimer.addEventListener("click", () => {
+      citations.splice(index, 1);
+      memoryCitations();
+      afficherCitations(citations);
+    });
+
+    count.textContent = "Nombre de citations: " + citations.length;
+
+    liEl.appendChild(btnSupprimer);
     listeCitations.appendChild(liEl);
   });
 }
+
+trier.addEventListener("click", () => {
+  citations.sort((a, b) => a.auteur.localeCompare(b.auteur));
+  memoryCitations();
+  afficherCitations(citations);
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();

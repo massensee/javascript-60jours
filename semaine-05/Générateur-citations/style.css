@@ -19,8 +19,8 @@ body {
   padding: 2rem;
   border-radius: 1.5rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  width: 90%;
-  max-width: 500px;
+  width: 95%;
+  max-width: 800px;
   text-align: center;
   transition: all 0.3s ease-in-out;
 }
@@ -65,11 +65,23 @@ input[type="text"] {
   font-size: 1rem;
 }
 
+form button[type="submit"] {
+  width: 100%;
+  margin-top: 1rem;
+}
+
 form {
   margin-top: 1.5rem;
+  max-width: 100%;
 }
 
 #liste-citations li {
+  border: 1px solid #ccc;
   list-style-type: none;
   padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
 }
