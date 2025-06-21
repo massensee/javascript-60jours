@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>📚 Ma bibliothèque</h1>
+
+      <!-- Formulaire d'ajout -->
+      <form id="book-form">
+        <input type="text" id="titre" placeholder="Titre du livre" required />
+        <input type="text" id="auteur" placeholder="Nom de l’auteur" required />
+        <select id="statut">
+          <option value="à lire">À lire</option>
+          <option value="lu">Lu</option>
+        </select>
+        <button type="submit">Ajouter</button>
+      </form>
+
+      <!-- Barre de recherche -->
+      <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="🔍 Rechercher un livre..."
+      />
+
+      <!-- Filtres -->
+      <div id="filtres">
+        <button data-filtre="tous">Tous</button>
+        <button data-filtre="à lire">À lire</button>
+        <button data-filtre="lu">Lu</button>
+      </div>
+
+      <!-- Liste des livres -->
+      <ul id="liste-livres"></ul>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
