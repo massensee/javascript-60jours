@@ -63,3 +63,13 @@ ul {
   list-style: none;
   padding: 0;
 }
+
+#liste-livres li {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 5px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
