@@ -38,7 +38,7 @@ saveLivres();
 
 function creerElement(livre, index) {
   const liEl = document.createElement("li");
-  liEl.textContent = `Livre: ${livre.titre} - ${livre.auteur}`;
+  liEl.textContent = `Livre: ${livre.titre} - Auteur: ${livre.auteur}`;
 
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "X";
