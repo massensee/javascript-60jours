@@ -1,7 +1,10 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
 const PORT = 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -20,15 +23,11 @@ const questions = [
     bonneReponse: 0,
   },
   {
-    question: "quelle est la capitale de l'Alérie ?",
+    question: "quelle est la capitale de l'Algérie ?",
     reponses: ["Tipaza", "Alger", "Oran"],
     bonneReponse: 1,
   },
 ];
-
-app.get("/questions", (req, res) => {
-  res.json(questions);
-});
 
 app.post("/repondre", (req, res) => {
   const { questionIndex, reponseIndex } = req.body;
@@ -46,6 +45,10 @@ app.post("/repondre", (req, res) => {
       }`,
     });
   }
+});
+
+app.get("/questions", (req, res) => {
+  res.json(questions);
 });
 
 app.listen(PORT, () => {
