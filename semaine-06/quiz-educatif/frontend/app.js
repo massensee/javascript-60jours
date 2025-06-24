@@ -1,9 +1,11 @@
+const btnReset = document.getElementById("reset");
 const container = document.getElementById("quiz-container");
 
 const API = "http://localhost:3000/questions";
 
 let currentQuestionIndex = 0;
 let questions = [];
+let score = 0;
 
 function afficherQuestion(index) {
   container.innerHTML = "";
@@ -14,12 +16,12 @@ function afficherQuestion(index) {
   questionTitle.textContent = question.question;
   container.appendChild(questionTitle);
 
-  question.reponses.forEach((reponse, index) => {
+  question.reponses.forEach((reponse, reponseIndex) => {
     const btn = document.createElement("button");
     btn.textContent = reponse;
 
     btn.addEventListener("click", () => {
-      envoyerReponse(currentQuestionIndex, index);
+      envoyerReponse(index, reponseIndex);
     });
 
     container.appendChild(btn);
@@ -48,14 +50,25 @@ function envoyerReponse(questionIndex, reponseIndex) {
     .then((res) => res.json())
     .then((data) => {
       alert(data.message);
+
+      if (data.message === "Bonne réponse !") {
+        score++;
+      }
+
       currentQuestionIndex++;
       if (currentQuestionIndex < questions.length) {
         afficherQuestion(currentQuestionIndex);
       } else {
-        container.textContent = "Quiz terminé ! Bravo ! 🎉";
+        container.textContent = `Quiz terminé ! 🎉 Ton score est de : ${score}/3`;
       }
     })
     .catch((error) => {
       console.error("Erreur lors de l'envoie de la reponse :", error);
     });
 }
+
+btnReset.addEventListener("click", () => {
+  currentQuestionIndex = 0;
+  score = 0;
+  afficherQuestion(currentQuestionIndex);
+});
