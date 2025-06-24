@@ -21,7 +21,7 @@ function afficherQuestion(index) {
     btn.textContent = reponse;
 
     btn.addEventListener("click", () => {
-      envoyerReponse(index, reponseIndex);
+      envoyerReponse(index, reponseIndex, btn);
     });
 
     container.appendChild(btn);
@@ -39,7 +39,7 @@ fetch(`${API}?t=${Date.now()}`)
     console.error("Erreur lors de la récupération des données :", error);
   });
 
-function envoyerReponse(questionIndex, reponseIndex) {
+function envoyerReponse(questionIndex, reponseIndex, bouton) {
   fetch("http://localhost:3000/repondre", {
     method: "POST",
     headers: {
@@ -49,18 +49,21 @@ function envoyerReponse(questionIndex, reponseIndex) {
   })
     .then((res) => res.json())
     .then((data) => {
-      alert(data.message);
-
       if (data.message === "Bonne réponse !") {
+        bouton.classList.add("correct");
         score++;
+      } else {
+        bouton.classList.add("incorrect");
       }
 
-      currentQuestionIndex++;
-      if (currentQuestionIndex < questions.length) {
-        afficherQuestion(currentQuestionIndex);
-      } else {
-        container.textContent = `Quiz terminé ! 🎉 Ton score est de : ${score}/3`;
-      }
+      setTimeout(() => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+          afficherQuestion(currentQuestionIndex);
+        } else {
+          container.textContent = `Quiz terminé ! 🎉 Ton score est de : ${score}/3`;
+        }
+      }, 1000);
     })
     .catch((error) => {
       console.error("Erreur lors de l'envoie de la reponse :", error);
