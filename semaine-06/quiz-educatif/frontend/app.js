@@ -26,6 +26,12 @@ function afficherQuestion(index) {
 
     container.appendChild(btn);
   });
+  mettreAJourBarreDeProgression();
+}
+
+function mettreAJourBarreDeProgression() {
+  const progress = (currentQuestionIndex / questions.length) * 100;
+  document.getElementById("progress-bar").style.width = `${progress}%`;
 }
 
 fetch(`${API}?t=${Date.now()}`)
@@ -58,10 +64,12 @@ function envoyerReponse(questionIndex, reponseIndex, bouton) {
 
       setTimeout(() => {
         currentQuestionIndex++;
+        mettreAJourBarreDeProgression();
+
         if (currentQuestionIndex < questions.length) {
           afficherQuestion(currentQuestionIndex);
         } else {
-          container.textContent = `Quiz terminé ! 🎉 Ton score est de : ${score}/3`;
+          container.textContent = `Quiz terminé ! 🎉 Ton score est de : ${score}/${questions.length}`;
         }
       }, 1000);
     })
