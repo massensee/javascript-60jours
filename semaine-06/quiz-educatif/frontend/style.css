@@ -85,17 +85,6 @@ button:hover {
   color: white;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 #progress-bar-container {
   width: 100%;
   max-width: 600px;
@@ -115,6 +104,16 @@ button:hover {
 
 #quiz-container {
   animation: fadeIn 0.5s ease;
+}
+
+.final-score {
+  font-size: 1.5rem;
+  color: #5a4634;
+  margin: 1rem 0;
+  background-color: #f0e6d6;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes fadeIn {

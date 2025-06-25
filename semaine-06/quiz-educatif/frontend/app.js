@@ -69,7 +69,15 @@ function envoyerReponse(questionIndex, reponseIndex, bouton) {
         if (currentQuestionIndex < questions.length) {
           afficherQuestion(currentQuestionIndex);
         } else {
-          container.textContent = `Quiz terminé ! 🎉 Ton score est de : ${score}/${questions.length}`;
+          const scoreMessage = document.createElement("p");
+          scoreMessage.classList.add("final-score");
+          scoreMessage.textContent = "Ton score : ";
+
+          const scoreStrong = document.createElement("strong");
+          scoreStrong.textContent = `${score}/${questions.length}`;
+
+          scoreMessage.appendChild(scoreStrong);
+          container.appendChild(scoreMessage);
         }
       }, 1000);
     })
