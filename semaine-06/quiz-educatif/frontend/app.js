@@ -6,6 +6,8 @@ const API = "http://localhost:3000/questions";
 let currentQuestionIndex = 0;
 let questions = [];
 let score = 0;
+let timerInterval;
+let timeLeft = 10;
 
 function afficherQuestion(index) {
   container.innerHTML = "";
@@ -16,16 +18,23 @@ function afficherQuestion(index) {
   questionTitle.textContent = question.question;
   container.appendChild(questionTitle);
 
+  const timerDiv = document.createElement("div");
+  timerDiv.id = "timer";
+  timerDiv.textContent = "Temps restant : 10s";
+  container.appendChild(timerDiv);
+
   question.reponses.forEach((reponse, reponseIndex) => {
     const btn = document.createElement("button");
     btn.textContent = reponse;
 
     btn.addEventListener("click", () => {
+      clearInterval(timerInterval);
       envoyerReponse(index, reponseIndex, btn);
     });
 
     container.appendChild(btn);
   });
+  lancerMinuteur();
   mettreAJourBarreDeProgression();
 }
 
@@ -84,6 +93,29 @@ function envoyerReponse(questionIndex, reponseIndex, bouton) {
     .catch((error) => {
       console.error("Erreur lors de l'envoie de la reponse :", error);
     });
+}
+
+function lancerMinuteur() {
+  clearInterval(timerInterval); // On s’assure d’annuler le timer précédent
+
+  timeLeft = 10;
+  const timerDisplay = document.getElementById("timer");
+  timerDisplay.textContent = `Temps restant : ${timeLeft}s`;
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerDisplay.textContent = `Temps restant : ${timeLeft}s`;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        afficherQuestion(currentQuestionIndex);
+      } else {
+        afficherScoreFinal();
+      }
+    }
+  }, 1000);
 }
 
 btnReset.addEventListener("click", () => {
