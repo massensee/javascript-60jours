@@ -29,10 +29,15 @@ function demarrerQuiz() {
 
 function afficherQuestion(index) {
   container.innerHTML = "";
+  console.log("Avant animation:", container.classList);
+  container.classList.remove("slideIn");
 
-  const question = questions[index];
+  void container.offsetWidth;
 
   container.classList.add("slideIn");
+  console.log("Après animation:", container.classList);
+
+  const question = questions[index];
 
   const questionTitle = document.createElement("h2");
   questionTitle.textContent = question.question;
@@ -87,15 +92,7 @@ function envoyerReponse(questionIndex, reponseIndex, bouton) {
         if (currentQuestionIndex < questions.length) {
           afficherQuestion(currentQuestionIndex);
         } else {
-          const scoreMessage = document.createElement("p");
-          scoreMessage.classList.add("final-score");
-          scoreMessage.textContent = "Ton score : ";
-
-          const scoreStrong = document.createElement("strong");
-          scoreStrong.textContent = `${score}/${questions.length}`;
-
-          scoreMessage.appendChild(scoreStrong);
-          container.appendChild(scoreMessage);
+          afficherScoreFinal();
         }
       }, 1000);
     })
@@ -105,7 +102,7 @@ function envoyerReponse(questionIndex, reponseIndex, bouton) {
 }
 
 function lancerMinuteur() {
-  clearInterval(timerInterval); // On s’assure d’annuler le timer précédent
+  clearInterval(timerInterval);
 
   timeLeft = 10;
   const timerDisplay = document.getElementById("timer");
@@ -132,3 +129,16 @@ btnReset.addEventListener("click", () => {
   score = 0;
   afficherQuestion(currentQuestionIndex);
 });
+
+function afficherScoreFinal() {
+  const scoreMessage = document.createElement("p");
+  scoreMessage.classList.add("final-score");
+  scoreMessage.textContent = "Ton score : ";
+
+  const scoreStrong = document.createElement("strong");
+  scoreStrong.textContent = `${score}/${questions.length}`;
+
+  scoreMessage.appendChild(scoreStrong);
+  container.innerHTML = "";
+  container.appendChild(scoreMessage);
+}
