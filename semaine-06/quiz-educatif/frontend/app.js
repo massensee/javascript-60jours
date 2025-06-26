@@ -32,6 +32,8 @@ function afficherQuestion(index) {
 
   const question = questions[index];
 
+  container.classList.add("slideIn");
+
   const questionTitle = document.createElement("h2");
   questionTitle.textContent = question.question;
   container.appendChild(questionTitle);
@@ -60,17 +62,6 @@ function mettreAJourBarreDeProgression() {
   const progress = (currentQuestionIndex / questions.length) * 100;
   document.getElementById("progress-bar").style.width = `${progress}%`;
 }
-
-// fetch(`${API}?t=${Date.now()}`)
-//   .then((response) => response.json())
-//   .then((data) => {
-//     const question = data[0];
-//     questions = data;
-//     afficherQuestion(currentQuestionIndex);
-//   })
-//   .catch((error) => {
-//     console.error("Erreur lors de la récupération des données :", error);
-//   });
 
 function envoyerReponse(questionIndex, reponseIndex, bouton) {
   fetch("http://localhost:3000/repondre", {
