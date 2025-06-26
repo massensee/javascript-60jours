@@ -1,5 +1,6 @@
 const btnReset = document.getElementById("reset");
 const container = document.getElementById("quiz-container");
+const startGame = document.getElementById("start");
 
 const API = "http://localhost:3000/questions";
 
@@ -8,6 +9,23 @@ let questions = [];
 let score = 0;
 let timerInterval;
 let timeLeft = 10;
+
+startGame.addEventListener("click", () => {
+  startGame.style.display = "none";
+  demarrerQuiz();
+});
+
+function demarrerQuiz() {
+  fetch(`${API}?t=${Date.now()}`)
+    .then((response) => response.json())
+    .then((data) => {
+      questions = data;
+      afficherQuestion(currentQuestionIndex);
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la récupération des données :", error);
+    });
+}
 
 function afficherQuestion(index) {
   container.innerHTML = "";
@@ -43,16 +61,16 @@ function mettreAJourBarreDeProgression() {
   document.getElementById("progress-bar").style.width = `${progress}%`;
 }
 
-fetch(`${API}?t=${Date.now()}`)
-  .then((response) => response.json())
-  .then((data) => {
-    const question = data[0];
-    questions = data;
-    afficherQuestion(currentQuestionIndex);
-  })
-  .catch((error) => {
-    console.error("Erreur lors de la récupération des données :", error);
-  });
+// fetch(`${API}?t=${Date.now()}`)
+//   .then((response) => response.json())
+//   .then((data) => {
+//     const question = data[0];
+//     questions = data;
+//     afficherQuestion(currentQuestionIndex);
+//   })
+//   .catch((error) => {
+//     console.error("Erreur lors de la récupération des données :", error);
+//   });
 
 function envoyerReponse(questionIndex, reponseIndex, bouton) {
   fetch("http://localhost:3000/repondre", {

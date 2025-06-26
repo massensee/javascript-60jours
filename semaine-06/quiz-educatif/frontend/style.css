@@ -48,7 +48,14 @@ h2 {
   color: #4d3b29;
 }
 
-button:not(#reset) {
+.btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+button:not(#reset):not(#start) {
   display: block;
   width: 100%;
   margin: 0.5rem 0;
@@ -64,6 +71,22 @@ button:not(#reset) {
 
 button:not(#reset):hover {
   background-color: #8bab70;
+}
+
+#start {
+  margin: 1rem 0;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background-color: #a3c48c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#start:hover {
+  background-color: #5ca2b2;
 }
 
 button {
