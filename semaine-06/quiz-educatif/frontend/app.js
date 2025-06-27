@@ -29,13 +29,6 @@ function demarrerQuiz() {
 
 function afficherQuestion(index) {
   container.innerHTML = "";
-  console.log("Avant animation:", container.classList);
-  container.classList.remove("slideIn");
-
-  void container.offsetWidth;
-
-  container.classList.add("slideIn");
-  console.log("Après animation:", container.classList);
 
   const question = questions[index];
 
@@ -79,10 +72,10 @@ function envoyerReponse(questionIndex, reponseIndex, bouton) {
     .then((res) => res.json())
     .then((data) => {
       if (data.message === "Bonne réponse !") {
-        bouton.classList.add("correct");
+        bouton.classList.add("correct", "zoom");
         score++;
       } else {
-        bouton.classList.add("incorrect");
+        bouton.classList.add("incorrect", "shake");
       }
 
       setTimeout(() => {
@@ -132,13 +125,34 @@ btnReset.addEventListener("click", () => {
 
 function afficherScoreFinal() {
   const scoreMessage = document.createElement("p");
-  scoreMessage.classList.add("final-score");
-  scoreMessage.textContent = "Ton score : ";
+  scoreMessage.classList.add("final-score", "quiz-end-animation");
 
-  const scoreStrong = document.createElement("strong");
-  scoreStrong.textContent = `${score}/${questions.length}`;
+  let message = "";
+  const scorePourcentage = (score / questions.length) * 100;
 
-  scoreMessage.appendChild(scoreStrong);
+  if (score === questions.length) {
+    message = "💯 Parfait !";
+  } else if (scorePourcentage >= 70) {
+    message = "🎉 Bravo !";
+  } else {
+    message = "💪 Tu peux réessayer !";
+  }
+
+  scoreMessage.innerHTML = `
+    <strong>${message}</strong><br>
+    Ton score est de : <strong>${score} sur ${questions.length}</strong>
+  `;
+
+  const btnRejouer = document.createElement("button");
+  btnRejouer.id = "rejouer";
+  btnRejouer.textContent = "Rejouer";
+  btnRejouer.addEventListener("click", () => {
+    currentQuestionIndex = 0;
+    score = 0;
+    demarrerQuiz();
+  });
+
   container.innerHTML = "";
   container.appendChild(scoreMessage);
+  container.appendChild(btnRejouer);
 }
