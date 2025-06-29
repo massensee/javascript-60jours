@@ -34,6 +34,19 @@ app.post("/todos", (req, res) => {
   res.status(201).json(nouvelleTache);
 });
 
+app.delete("/todos/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  const index = todos.findIndex((todo) => todo.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Tâche non trouvée." });
+  }
+
+  todos.splice(index, 1);
+  res.json({ message: `Tâche avec id ${id} supprimée.` });
+});
+
 app.listen(PORT, (req, res) => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
