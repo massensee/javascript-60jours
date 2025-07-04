@@ -20,6 +20,13 @@ function chargerTaches() {
           supprimerTache(todo.id);
         });
         li.appendChild(btnDelete);
+        li.addEventListener("click", () => {
+          fetch(`${API_URL}/${todo.id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fait: !todo.fait }),
+          }).then(() => chargerTaches());
+        });
       });
     });
 }
