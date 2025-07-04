@@ -11,22 +11,68 @@ function chargerTaches() {
       list.innerHTML = "";
       todos.forEach((todo) => {
         const li = document.createElement("li");
-        li.textContent = todo.texte;
+        li.classList.add("todo-item");
         if (todo.fait) li.classList.add("done");
-        list.appendChild(li);
-        const btnDelete = document.createElement("button");
-        btnDelete.textContent = "🗑️";
-        btnDelete.addEventListener("click", () => {
-          supprimerTache(todo.id);
-        });
-        li.appendChild(btnDelete);
+
+        const spanTexte = document.createElement("span");
+        spanTexte.textContent = todo.texte;
+        li.appendChild(spanTexte);
+
+        // ✅ Bouton pour cocher/décocher
         li.addEventListener("click", () => {
           fetch(`${API_URL}/${todo.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ fait: !todo.fait }),
-          }).then(() => chargerTaches());
+          }).then(chargerTaches);
         });
+
+        // ✅ Bouton supprimer
+        const btnDelete = document.createElement("button");
+        btnDelete.textContent = "🗑️";
+        btnDelete.classList.add("todo-btn", "btn-delete");
+        btnDelete.addEventListener("click", (e) => {
+          e.stopPropagation(); // éviter conflit avec le clic sur la tâche
+          supprimerTache(todo.id);
+        });
+        li.appendChild(btnDelete);
+
+        // ✅ Bouton modifier
+        const btnEdit = document.createElement("button");
+        btnEdit.textContent = "✏️";
+        btnEdit.classList.add("todo-btn", "btn-edit");
+        btnEdit.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const inputEdit = document.createElement("input");
+          inputEdit.type = "text";
+          inputEdit.value = todo.texte;
+
+          li.innerHTML = ""; // vide l'élément
+          li.appendChild(inputEdit);
+          inputEdit.focus();
+
+          inputEdit.addEventListener("blur", () => {
+            const nouveauTexte = inputEdit.value.trim();
+            if (nouveauTexte && nouveauTexte !== todo.texte) {
+              fetch(`${API_URL}/${todo.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ texte: nouveauTexte }),
+              }).then(chargerTaches);
+            } else {
+              chargerTaches();
+            }
+          });
+        });
+
+        const btnGroup = document.createElement("div");
+        btnGroup.classList.add("btn-group");
+        btnGroup.appendChild(btnEdit);
+        btnGroup.appendChild(btnDelete);
+
+        li.appendChild(btnEdit);
+        li.appendChild(btnGroup);
+        list.appendChild(li);
       });
     });
 }
