@@ -11,6 +11,7 @@ function chargerTaches() {
       list.innerHTML = "";
       todos.forEach((todo) => {
         const li = document.createElement("li");
+        li.classList.add("fade-in");
         li.classList.add("todo-item");
         if (todo.fait) li.classList.add("done");
 
@@ -34,9 +35,17 @@ function chargerTaches() {
           e.stopPropagation();
           li.classList.add("fade-out");
 
-          setTimeout(() => {
-            supprimerTache(todo.id);
-          }, 400);
+          li.addEventListener(
+            "animationend",
+            () => {
+              li.remove();
+            },
+            { once: true }
+          );
+
+          supprimerTache(todo.id).catch((err) => {
+            console.error("Erreur :", err);
+          });
         });
         li.appendChild(btnDelete);
 
@@ -79,7 +88,6 @@ function chargerTaches() {
     });
 }
 
-// Ajouter une tâche
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const texte = input.value.trim();
@@ -98,17 +106,10 @@ form.addEventListener("submit", (e) => {
 chargerTaches();
 
 function supprimerTache(id) {
-  fetch(`${API_URL}/${id}`, {
+  return fetch(`${API_URL}/${id}`, {
     method: "DELETE",
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("Erreur lors de la suppression");
-      return res.json();
-    })
-    .then(() => {
-      chargerTaches(); // recharge la liste après suppression
-    })
-    .catch((err) => {
-      console.error("Erreur :", err);
-    });
+  }).then((res) => {
+    if (!res.ok) throw new Error("Erreur lors de la suppression");
+    return res.json();
+  });
 }
