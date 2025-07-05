@@ -27,17 +27,19 @@ function chargerTaches() {
           }).then(chargerTaches);
         });
 
-        // ✅ Bouton supprimer
         const btnDelete = document.createElement("button");
         btnDelete.textContent = "🗑️";
         btnDelete.classList.add("todo-btn", "btn-delete");
         btnDelete.addEventListener("click", (e) => {
-          e.stopPropagation(); // éviter conflit avec le clic sur la tâche
-          supprimerTache(todo.id);
+          e.stopPropagation();
+          li.classList.add("fade-out");
+
+          setTimeout(() => {
+            supprimerTache(todo.id);
+          }, 400);
         });
         li.appendChild(btnDelete);
 
-        // ✅ Bouton modifier
         const btnEdit = document.createElement("button");
         btnEdit.textContent = "✏️";
         btnEdit.classList.add("todo-btn", "btn-edit");

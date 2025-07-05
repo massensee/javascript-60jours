@@ -135,3 +135,9 @@ li.done {
 .btn-delete {
   color: red;
 }
+
+.fade-out {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
